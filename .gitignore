@@ -1,2 +1,5 @@
 target
 doc
+generated_code
+*.zargo~
+*.xmi~
