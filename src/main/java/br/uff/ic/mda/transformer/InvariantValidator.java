@@ -108,7 +108,7 @@ public abstract class InvariantValidator implements IValidator {
                 this.insertInvariant(entry.getKey(), entry.getValue());
             }
         } catch (IOException ex) {
-            String msg = "Fail to create Invariants";
+            final String msg = "Fail to create Invariants";
             ContractException e = new ContractException(msg, ex);
             getLogger().error(msg, e);
             throw e;
@@ -118,17 +118,23 @@ public abstract class InvariantValidator implements IValidator {
     /**
      * Method description
      *
-     *
      * @param invName
      * @param invBody
      *
      * @return
+     * @throws ContractException
      */
-    protected final boolean insertInvariant(String invName, String invBody) {
+    protected final boolean insertInvariant(String invName, String invBody) throws ContractException {
         try {
+            if( this.getInvariants().containsKey(invName) ){
+                throw new Exception("Trying to overwrite invariant" + invName);
+            }
             this.getInvariants().put(invName, invBody);
-        } catch (Exception e) {
-            return false;
+        } catch (Exception ex) {
+            final String msg = "Fail to insert invariant";
+            ContractException e = new ContractException(msg, ex);
+            getLogger().error(msg,e);
+            throw e;
         }
 
         return true;

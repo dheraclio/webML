@@ -15,8 +15,4 @@ public interface TransformationRule {
     public void transform() throws ContractException;
 
     public void link() throws ContractException;
-
-    public void insertMetaModelAssociations() throws ContractException;
-
-    public void insertMetaModelClasses()throws ContractException;
 }

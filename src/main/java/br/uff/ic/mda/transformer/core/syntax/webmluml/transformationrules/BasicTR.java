@@ -6,6 +6,7 @@ package br.uff.ic.mda.transformer.core.syntax.webmluml.transformationrules;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.transformer.WebMLUMLDomain;
+import br.uff.ic.mda.transformer.core.syntax.webmluml.WebMLUMLMetaModeler;
 import br.uff.ic.mda.transformer.core.util.BasicModeler;
 import br.uff.ic.mda.transformer.core.util.JDHelper;
 
@@ -27,11 +28,13 @@ public abstract class BasicTR extends BasicModeler{
 
     public void link() throws ContractException {
 
-        if (getLinkQuery() == null || getLinkQuery().isEmpty()) {
+        String query = getLinkQuery();
+
+        if ( query == null || query.isEmpty()) {
             throw new ContractException(ContractException.MSG_TRANSFORMATIONEXCEPTION);
         }
 
-        for (String id : JDHelper.filterQueryResult(getLinkQuery())) {
+        for (String id : JDHelper.filterQueryResult(manager.query(query))) {
             doLink(id);
         }
     }
@@ -39,12 +42,13 @@ public abstract class BasicTR extends BasicModeler{
     protected abstract void doLink(String id) throws ContractException;
 
     public void transform() throws ContractException {
-        
-        if (getTransformQuery() == null || getTransformQuery().isEmpty()) {
+        String query = getTransformQuery();
+
+        if ( query == null || query.isEmpty()) {
             throw new ContractException(ContractException.MSG_TRANSFORMATIONEXCEPTION);
         }
 
-        for (String id : JDHelper.filterQueryResult(getTransformQuery())) {
+        for (String id : JDHelper.filterQueryResult(manager.query(query))) {
             String name = JDHelper.getName(id, manager);
             doTransformation(id, name);
         }
@@ -93,5 +97,28 @@ public abstract class BasicTR extends BasicModeler{
     protected final void setDomain(WebMLUMLDomain domain) {
         this.domain = domain;
     }
+
+    protected String findUMLTypeIdFromWebMLTypeId(String webmlId) throws ContractException {
+
+        // Procura por Class -> Entity
+        String idRelationship = getId(WebMLUMLMetaModeler.TR_WEBMLDATATYPE2UMLDATATYPE,WebMLUMLMetaModeler.ROLE_WEBML,webmlId);
+        if (idRelationship != null) {
+            return getFirstQueryResult(idRelationship,WebMLUMLMetaModeler.ROLE_UML);
+        }
+
+        return null;
+    }
+
+    protected String findUMLClassFromWebMLId(String webmlId) throws ContractException {
+
+        // Procura por Class -> Entity
+        String idRelationship = getId(WebMLUMLMetaModeler.TR_ENTITY2CLASS,WebMLUMLMetaModeler.ROLE_WEBML,webmlId);
+        if (idRelationship != null) {
+            return getFirstQueryResult(idRelationship,WebMLUMLMetaModeler.ROLE_UML);
+        }
+
+        return null;
+    }
+
 
 }

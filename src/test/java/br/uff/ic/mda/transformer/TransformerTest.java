@@ -27,7 +27,7 @@ public class TransformerTest {
         assertTrue(true);
     }
 
-    @Test
+    //@Test
     public void testWebMLToUMLTransformation() throws Exception {
         String pathXmi = TestHelper.getCurrentTargetTestPath() + "/transformer/blogwebml.xmi";
         WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), pathXmi);
@@ -38,7 +38,7 @@ public class TransformerTest {
         assertTrue(true);
     }
 
-    //@Test
+    @Test
     public void testWebMLToEJBTransformation() throws Exception {
         String pathXmi = TestHelper.getCurrentTargetTestPath() + "/transformer/blogwebml.xmi";
         WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), pathXmi);

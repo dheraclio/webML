@@ -7,8 +7,7 @@ package br.uff.ic.mda.transformer.core.syntax.webml;
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.IXMIParser;
 import br.uff.ic.mda.tclib.ModelManager;
-import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
 import br.uff.ic.mda.xmiparser.uml.UMLAssociation;
 import br.uff.ic.mda.xmiparser.uml.UMLAssociationEnd;
 import br.uff.ic.mda.xmiparser.uml.UMLAttribute;
@@ -27,9 +26,6 @@ import java.util.Set;
  */
 public class WebMLXMIParser {
 
-    private static final String CLASS = UMLMetaModeler.CLASS;
-    private static final String NAME = "name";
-    private static final String CLASSNAME = "className";
     private IXMIParser parser;
     private ModelManager manager;
 
@@ -54,7 +50,7 @@ public class WebMLXMIParser {
         insertAssociationEnd();
 
         //Inserting Methods
-        //insertMethods();
+        insertMethods();
     }
 
     private void insertClasses() throws ContractException {
@@ -62,67 +58,65 @@ public class WebMLXMIParser {
         for (Entry<String, UMLClass> classEntry : classSet) {
             UMLClass umlclass = classEntry.getValue();
             if (!umlclass.hasStereotype()) {
-                insertClass(umlclass.getId(), umlclass.getName());
-            }
-        }
-
-        for (Entry<String, UMLClass> classEntry : classSet) {
-            UMLClass umlclass = classEntry.getValue();
-            if (umlclass.hasStereotype()) {
+                throw new ContractException("Class not stereotyped: " + umlclass.getName());
+            } else {
                 insertStereotypedClass(umlclass.getId(), umlclass.getName(), umlclass.getStereotypeRefId());
             }
         }
-    }
 
-    /**
-     *
-     * @param id
-     * @param name
-     * @return
-     * @throws ContractException
-     */
-    private boolean insertClass(String id, String name) throws ContractException {
-        return insertObject(CLASS, id, name);
     }
 
     private boolean insertStereotypedClass(String id, String name, String stereotypeId) throws ContractException {
         boolean result = true;
+        final String attName = "name";
         String stereotypeName = getStereoTypeName(stereotypeId);
+        //String stereotypeObjId = JDHelper.getId(stereotypeName);
         result &= manager.insertObject(stereotypeName, id);
-        result &= insertValue(stereotypeName, NAME, id, name);
+        result &= insertValue(stereotypeName, attName, id, name);
+
+        //System.out.println("Insert object: " + stereotypeName + " id: " + id);
         return result;
-    }    
+    }
 
     private boolean insertOperation(String id, String name, String visibility, String returnType, String classId) throws ContractException {
+        final String operation = CommonElementsPackage.UMLOPERATION;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+        final String className = CommonElementsPackage.UMLCLASS;
 
-        boolean result = insertObject("Operation", id, name);
-        result &= manager.insertValue("Operation", "visibility", id, visibility == null ? "" : visibility);
-        result &= manager.insertLink("Operation", id, "types", "classifier", returnType, "Classifier");
-        result &= manager.insertLink("Operation", id, "feature", "class", classId, "Class");
+        boolean result = insertObject(operation, id, name);
+        result &= insertValue(operation, "visibility", id, visibility);
+        result &= manager.insertLink(operation, id, "types", "classifier", returnType, classifier);
+        result &= manager.insertLink(operation, id, "feature", "class", classId, className);
         return result;
     }
 
     private boolean insertParameter(String id, String name, String type, String operationId) throws ContractException {
-        final String parameter = "Parameter";
+        final String parameter = CommonElementsPackage.UMLPARAMETER;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+        final String operation = CommonElementsPackage.UMLOPERATION;
+
         boolean result = insertObject(parameter, id, name);
 
-        result &= manager.insertLink(parameter, id, "types", "classifier", type, "Classifier");
-        result &= manager.insertLink(parameter, id, "parameter", "operation", operationId, "Operation");
+        result &= manager.insertLink(parameter, id, "types", "classifier", type, classifier);
+        result &= manager.insertLink(parameter, id, "parameter", "operation", operationId, operation);
 
         return result;
     }
 
     private boolean insertSet(String id, String name, String elementType) throws ContractException {
-        final String UMLSET = "UMLSet";
+        final String UMLSET = CommonElementsPackage.UMLUMLSET;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+
         boolean result = insertObject(UMLSET, id, name);
-        result &= manager.insertLink(UMLSET, id, "setA", "elementType", elementType, "Classifier");
+        result &= manager.insertLink(UMLSET, id, "setA", "elementType", elementType, classifier);
         return result;
     }
 
     private boolean insertObject(String className, String classId, String objectName) throws ContractException {
         boolean result = true;
+        final String attName = "name";
         result &= manager.insertObject(className, classId);
-        result &= insertValue(className, NAME, classId, objectName);
+        result &= insertValue(className, attName, classId, objectName);
         return result;
     }
 
@@ -155,20 +149,21 @@ public class WebMLXMIParser {
         }
     }
 
-    private boolean insertAttribute(String id, String name, String visibility, String type, UMLClass classInstance) throws ContractException {
-        String attribute = "Attribute";
+    private boolean insertAttribute(String attrid, String name, String visibility, String type, UMLClass classInstance) throws ContractException {
+        if (!classInstance.hasStereotype()) {
+            throw new ContractException("Class not stereotyped:" + classInstance.getName());
+        }
+
+        String classifer = CommonElementsPackage.UMLCLASSIFIER;
+        String attribute = CommonElementsPackage.UMLATTRIBUTE;
+        String steretypeName = getStereoTypeName(classInstance.getStereotypeRefId());
 
         boolean result = true;
-        result &= manager.insertObject(attribute, id);
-        result &= manager.insertValue(attribute, "name", id, name == null ? "" : name);
-        result &= manager.insertValue(attribute, "visibility", id, visibility == null ? "" : visibility);
-        result &= manager.insertLink(attribute, id, "types", "classifier", type, "Classifier");
-        if(classInstance.hasStereotype()){
-            String steretypeName = getStereoTypeName(classInstance.getStereotypeRefId());
-            result &= manager.insertLink(attribute, id, DataViewPackage.ROLE_ATTRIBUTE, DataViewPackage.ROLE_ATTRIBUTEOF, classInstance.getId(), steretypeName);
-        } else{
-            throw new ContractException("Class not stereotiped:" +  classInstance.getName());
-        }
+        result &= manager.insertObject(attribute, attrid);
+        result &= insertValue(attribute, "name", attrid, name);
+        result &= insertValue(attribute, "visibility", attrid, visibility);
+        result &= manager.insertLink(attribute, attrid, "types", "classifier", type, classifer);
+        result &= manager.insertLink(attribute, attrid, "feature", "class", classInstance.getId(), steretypeName);
 
         return result;
     }
@@ -196,43 +191,52 @@ public class WebMLXMIParser {
             UMLClass class1 = (UMLClass) parser.getClasses().get(association1.getParticipantClassId());
             UMLClass class2 = (UMLClass) parser.getClasses().get(association2.getParticipantClassId());
 
-            this.insertAssociationEnd(association2.getId(), association2.getName(), association2.getVisibility(), class2.getId(), String.valueOf(association2.getLower()), String.valueOf(association2.getUpper()), association2.isAggregation(), class1.getId());//Class Id ??
-            this.insertAssociationEnd(association1.getId(), association1.getName(), association1.getVisibility(), class1.getId(), String.valueOf(association1.getLower()), String.valueOf(association1.getUpper()), association1.isAggregation(), class2.getId());
+            this.insertAssociationEnd(association2, class2, class1);
+            this.insertAssociationEnd(association1, class1, class2);
             this.insertLinksBetweenAssociationEnds(association2.getId(), association1.getId());
             this.insertAssociation(associationEntry.getValue().getId(), associationEntry.getValue().getName(), association2.getId(), association1.getId());
         }
     }
 
-    private boolean insertAssociation(String id, String name, String... associationEndIds) throws ContractException {
-        if (associationEndIds.length < 2) {
-            throw new ContractException("Association can't have less than 2 AssociationEnd");
-        }
+    private boolean insertAssociationEnd(UMLAssociationEnd association, UMLClass typeInstance, UMLClass classInstance) throws ContractException {
+        final String associationEnd = CommonElementsPackage.UMLASSOCIATIONEND;
+
+        String id = association.getId();
+        String lower = String.valueOf(association.getLower());
+        String upper = String.valueOf(association.getUpper());
 
         boolean result = true;
-        result &= insertObject("Association", id, name);
-        for (String associationEndId : associationEndIds) {
-            result &= manager.insertLink("AssociationEnd", associationEndId, "associationEnds", "association", id, "Association");
-        }
+        result &= insertObject(associationEnd, id, association.getName());
+        result &= insertValue(associationEnd, "visibility", id, association.getVisibility());
+        result &= insertValue(associationEnd, "lower", id, lower);
+        result &= insertValue(associationEnd, "upper", id, upper);
+        result &= insertValue(associationEnd, "composition", id, association.isAggregation());
+        result &= manager.insertLink(associationEnd, id, "types", "classifier", typeInstance.getId(), CommonElementsPackage.UMLCLASSIFIER);
+        result &= manager.insertLink(associationEnd, id, "feature", "class", classInstance.getId(), CommonElementsPackage.UMLCLASS);
         return result;
     }
 
-    private boolean insertAssociationEnd(String id, String name, String visibility, String type, String lower, String upper, Boolean composition, String classId) throws ContractException {
+    private boolean insertAssociation(String id, String name, String... associationEndIds) throws ContractException {
+        final String association = CommonElementsPackage.UMLASSOCIATION;
+        final String associationEnd = CommonElementsPackage.UMLASSOCIATIONEND;
 
+        if (associationEndIds.length < 2) {
+            throw new ContractException(association + " can't have less than 2 " + associationEnd);
+        }
         boolean result = true;
-        result &= insertObject("AssociationEnd", id, name);
-        result &= insertValue("AssociationEnd", "visibility", id, visibility);
-        result &= insertValue("AssociationEnd", "lower", id, lower);
-        result &= insertValue("AssociationEnd", "upper", id, upper);
-        result &= insertValue("AssociationEnd", "composition", id, composition);
-        result &= manager.insertLink("AssociationEnd", id, "types", "classifier", type, "Classifier");
-        result &= manager.insertLink("AssociationEnd", id, "feature", "class", classId, "Class");
+        result &= insertObject(association, id, name);
+        for (String associationEndId : associationEndIds) {
+            result &= manager.insertLink(associationEnd, associationEndId, "associationEnds", "association", id, association);
+        }
         return result;
     }
 
     private boolean insertLinksBetweenAssociationEnds(String associationEnd, String otherEnd) throws ContractException {
+        final String associationEndClass = CommonElementsPackage.UMLASSOCIATIONEND;
+
         boolean result = true;
-        result &= manager.insertLink("AssociationEnd", associationEnd, "others", "otherEnd", otherEnd, "AssociationEnd");
-        result &= manager.insertLink("AssociationEnd", otherEnd, "others", "otherEnd", associationEnd, "AssociationEnd");
+        result &= manager.insertLink(associationEndClass, associationEnd, "others", "otherEnd", otherEnd, associationEndClass);
+        result &= manager.insertLink(associationEndClass, otherEnd, "others", "otherEnd", associationEnd, associationEndClass);
         return result;
     }
 
@@ -240,66 +244,78 @@ public class WebMLXMIParser {
         Set<Entry<String, UMLClass>> classSet = parser.getClasses().entrySet();
         for (Entry<String, UMLClass> classeEntry : classSet) {
             List<UMLOperation> operationArray = classeEntry.getValue().getOperations();
-            for (UMLOperation operation : operationArray) {
-                UMLElement element = (UMLElement) parser.getDataTypes().get(processID(operation.getType()));
-                String operationType = null;
-                if ("List".equals(element.getName())) {
-                    String setId = "ID" + System.nanoTime();
-                    this.insertSet(setId, element.getName(), "UMLVoid");
-                    operationType = setId;
-                } else {
-                    operationType = queryType(element.getName());
-                    if (operationType == null || "null".equals(operationType)) {
-                        operationType = processID(operation.getType());
-                    }
-                }
-                this.insertOperation(operation.getId(), operation.getName(), operation.getVisibility(), operationType, classeEntry.getValue().getId());
-                for (UMLElement parameter : operation.getParameters()) {
-                    String parameterType = null;
-                    try {
-                        parameterType = operation.getParameterType(parameter.getId());
-                        UMLElement pElement = (UMLElement) parser.getDataTypes().get(processID(parameterType));
-                        if (pElement != null) {
-                            // Eh um DataType
-                            if ("List".equals(pElement.getName())) {
-                                String setId = "ID" + System.nanoTime();
-                                this.insertSet(setId, pElement.getName(), "UMLVoid");
-                                parameterType = setId;
-                            } else {
-                                parameterType = queryType(pElement.getName());
-                                if (parameterType == null || "null".equals(parameterType)) {
-                                    parameterType = processID(operation.getParameterType(parameter.getId()));
-                                }
-                            }
-                        } else {
-                            // Nao eh um DataType
-                            parameterType = processID(operation.getParameterType(parameter.getId()));
-                        }
-                    } catch (Exception ex) {
-                        throw new ContractException("Can't recover parameter type", ex);
-                    }
-                    this.insertParameter(parameter.getId(), parameter.getName(), parameterType, operation.getId());
-                }
+            insertMethodOperations(classeEntry.getValue(), operationArray);
+        }
+    }
+
+    private void insertMethodOperations(UMLClass classInst, List<UMLOperation> operationArray) throws ContractException {
+        for (UMLOperation operation : operationArray) {
+            //Return
+            String typeId = processID(operation.getType());
+            UMLElement element = (UMLElement) parser.getDataTypes().get(typeId);
+            String operationType = getOperationType(element, typeId);
+            this.insertOperation(operation.getId(), operation.getName(), operation.getVisibility(), operationType, classInst.getId());
+
+            //Parameters
+            for (UMLElement parameter : operation.getParameters()) {
+                String parameterType = getParameterType(operation,parameter);
+                this.insertParameter(parameter.getId(), parameter.getName(), parameterType, operation.getId());
             }
         }
     }
 
+    private String getOperationType(UMLElement element, String typeId) throws ContractException {
+        if ("List".equals(element.getName())) {
+            String setId = "ID" + System.nanoTime();
+            this.insertSet(setId, element.getName(), "UMLVoid");
+            return setId;
+        } else {
+            String operationType = queryType(element.getName());
+            if (operationType == null || "null".equals(operationType)) {
+                operationType = typeId;
+            }
+            return operationType;
+        }
+    }
+
     private String queryType(String attributeTypeName) throws ContractException {
-        final String startQuery = "DataType.allInstances()->select(dt | dt.name = '";
+        final String startQuery = CommonElementsPackage.UMLDATATYPE + ".allInstances()->select(dt | dt.name = '";
         final String endQuery = "')->asOrderedSet()->first()";
-        return manager.query( startQuery + attributeTypeName + endQuery);
+        return manager.query(startQuery + attributeTypeName + endQuery);
     }
 
     private String processID(String oldID) {
         return "ID".concat(oldID).replace("\\.", "").replace(".", "").replace(":", "").replace("-", "").replace(" ", "");
     }
 
-    private String getStereoTypeName(String stereotypeId) throws ContractException{
+    private String getStereoTypeName(String stereotypeId) throws ContractException {
         String name = parser.getStereoTypeName(stereotypeId);
-        if(name == null){
+        if (name == null) {
             throw new ContractException("Missing stereotype");
         }
-        return name;
+        return WebMLBasicPackage.PREFIX + name;
     }
 
+    private String getParameterType(UMLOperation operation,UMLElement parameter) throws ContractException {
+        try {
+            String parameterType = operation.getParameterType(parameter.getId());
+            UMLElement pElement = (UMLElement) parser.getDataTypes().get(processID(parameterType));
+            if (pElement != null) {
+                // Eh um DataType
+                if ("List".equals(pElement.getName())) {
+                    String setId = "ID" + System.nanoTime();
+                    this.insertSet(setId, pElement.getName(), "UMLVoid");
+                    parameterType = setId;
+                } else {
+                    parameterType = queryType(pElement.getName());
+                    if (parameterType != null) {
+                        return parameterType;
+                    }
+                }
+            }
+            return processID(operation.getParameterType(parameter.getId()));
+        } catch (Exception ex) {
+            throw new ContractException("Can't recover parameter type", ex);
+        }
+    }
 }

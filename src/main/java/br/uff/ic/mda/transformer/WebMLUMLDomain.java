@@ -15,6 +15,7 @@ import java.util.Collection;
  */
 public class WebMLUMLDomain extends JoinedDomain<WebMLDomain, UMLDomain> {
 
+
     /**
      * Constructs ...
      *
@@ -53,7 +54,7 @@ public class WebMLUMLDomain extends JoinedDomain<WebMLDomain, UMLDomain> {
      */
     @Override
     public void createMetamodel() throws ContractException {
-        WebMLUMLMetaModeler.insertMetaModel(this);
+        WebMLUMLMetaModeler.insertMetaModel();
     }
 
     /**

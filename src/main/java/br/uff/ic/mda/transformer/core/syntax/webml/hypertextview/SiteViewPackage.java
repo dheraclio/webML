@@ -15,12 +15,12 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class SiteViewPackage extends WebMLBasicPackage {
 
-    public static final String SITEVIEW = "SiteView";
+    public static final String SITEVIEW = PREFIX + "SiteView";
     public static final String SITEVIEW_PROTECTED = "protected";
     public static final String SITEVIEW_SECURE = "secure";
     public static final String SITEVIEW_LOCALIZED = "localized";
 
-    public static final String SITEVIEWELEMENT = "SiteViewElement";
+    public static final String SITEVIEWELEMENT = PREFIX + "SiteViewElement";
 
     public static void insertMetaModel() throws ContractException{
         

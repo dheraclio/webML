@@ -17,8 +17,9 @@ import java.util.List;
  */
 public abstract class JDHelper {
 
-    public static String getId(String name){
-        return  name + System.nanoTime();
+    public static String getNewId(){
+        final String prefix = "ID";
+        return  prefix + System.nanoTime();
     }
 
     public static String getName(String id, ModelManager manager) throws ContractException{
@@ -29,11 +30,11 @@ public abstract class JDHelper {
     /**
      * @author Roberto
      * Process the result of a XEOS's query and transform it in a array of strings
-     * @param result    the result of a XEOS's query
+     * @param original the result of a XEOS's query
      * @return  an array with the result of a XEOS's query
      */
-    public static String[] processQueryResult(String result) {
-        result = result.replace("\n", "");
+    public static String[] processQueryResult(String original) {
+        String result = original.replace("\n", "");
         int inicio = result.indexOf("{");
         int fim = result.indexOf("}");
 

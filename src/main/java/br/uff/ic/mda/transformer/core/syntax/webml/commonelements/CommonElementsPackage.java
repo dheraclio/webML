@@ -5,7 +5,6 @@
 package br.uff.ic.mda.transformer.core.syntax.webml.commonelements;
 
 import br.uff.ic.mda.tclib.ContractException;
-import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
 import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
 
 /**
@@ -18,25 +17,41 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class CommonElementsPackage extends WebMLBasicPackage {
 
-    public static final String MODELELEMENT = "ModelElement";
-    public static final String ELEMENTWITHCOMMENT = "ElementWithComment";
-    public static final String COMMENT = "Comment";
+    public static final String MODELELEMENT = PREFIX + "ModelElement";
+    public static final String ELEMENTWITHCOMMENT = PREFIX + "ElementWithComment";
+    public static final String COMMENT = PREFIX + "Comment";
     public static final String COMMENT_BODY = "body";
-    public static final String DERIVABLEELEMENT = "DerivableElement";
-    public static final String DERIVATIONCONSTRAINT = "DerivationConstraint";
+    public static final String DERIVABLEELEMENT = PREFIX + "DerivableElement";
+    public static final String DERIVATIONCONSTRAINT = PREFIX + "DerivationConstraint";
     public static final String DERIVATIONCONSTRAINT_DERIVATIONQUERY = "derivationQuery";
-    public static final String IDENTIFIEDELEMENT = "IdentifiedElement";
+    public static final String IDENTIFIEDELEMENT = PREFIX + "IdentifiedElement";
     public static final String IDENTIFIEDELEMENT_ID = "id";
-    public static final String ELEMENTWITHPROPERTY = "ElementWithProperty";
-    public static final String NAMEDELEMENT = "NamedElement";
-    public static final String PROPERTY = "Property";
-    public static final String ELEMENTWITHTYPE = "ElementWithType";
-    public static final String DOMAINELEMENT = "DomainElement";
-    public static final String TYPE = "Type";
-    public static final String WEBMLTYPE = "WebMLType";
-    public static final String DOMAIN = "Domain";
+    public static final String ELEMENTWITHPROPERTY = PREFIX + "ElementWithProperty";
+    public static final String NAMEDELEMENT = PREFIX + "NamedElement";
+    public static final String PROPERTY = PREFIX + "Property";
+    public static final String ELEMENTWITHTYPE = PREFIX + "ElementWithType";
+    public static final String DOMAINELEMENT = PREFIX + "DomainElement";
+    public static final String TYPE = PREFIX + "Type";
+    public static final String WEBMLTYPE = PREFIX + "WebMLType";
+    public static final String DOMAIN = PREFIX + "Domain";
+    //UML Base
+    public static final String UMLMODELELEMENT = "WEBMLUML_ModelElement";
+    public static final String UMLCLASSIFIER = "WEBMLUML_Classifier";
+    public static final String UMLTYPED = "WEBMLUML_Typed";
+    public static final String UMLDATATYPE = "WEBMLUML_DataType";
+    public static final String UMLUMLSET = "WEBMLUML_UMLSet";
+    public static final String UMLCLASS = "WEBMLUML_Class";
+    public static final String UMLINTERFACE = "WEBMLUML_Interface";
+    public static final String UMLASSOCIATIONCLASS = "WEBMLUML_AssociationClass";
+    public static final String UMLFEATURE = "WEBMLUML_Feature";
+    public static final String UMLASSOCIATIONEND = "WEBMLUML_AssociationEnd";
+    public static final String UMLASSOCIATION = "WEBMLUML_Association";
+    public static final String UMLATTRIBUTE = "WEBMLUML_Attribute";
+    public static final String UMLOPERATION = "WEBMLUML_Operation";
+    public static final String UMLPARAMETER = "WEBMLUML_Parameter";
 
     public static void insertMetaModel() throws ContractException {
+        insertUMLBaseModel();
         manager.insertClass(MODELELEMENT);
         manager.insertClass(ELEMENTWITHCOMMENT);
         manager.insertClass(COMMENT);
@@ -98,9 +113,71 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
     }
 
     public static void createSpecification() throws ContractException {
-        
-        manager.insertObject(UMLMetaModeler.DATATYPE, TYPE_IDENTIFIER);
-        manager.insertValue(UMLMetaModeler.DATATYPE, "name", TYPE_IDENTIFIER, "");
+        //UML Standart Elements (from XMIParser)
+        insertType("UMLInteger","Integer");
+        insertType("UMLString", "String");
+        insertType("UMLBoolean", "Boolean");
+        insertType("UMLDate", "Date");
 
+        //Java Profile
+        insertType("UMLVoid", "void");
+
+        //WebML Profile
+        insertType(TYPE_IDENTIFIER, "String");
+
+    }
+
+    protected static void insertType(String identifier, String type) throws ContractException {
+        final String attName = "name";
+        manager.insertObject(UMLDATATYPE, identifier);
+        manager.insertValue(UMLDATATYPE, attName, identifier, type);
+    }
+
+    private static void insertUMLBaseModel() throws ContractException {
+
+        manager.insertClass(UMLMODELELEMENT);
+        manager.insertClass(UMLCLASSIFIER);
+        manager.insertClass(UMLTYPED);
+        manager.insertClass(UMLDATATYPE);
+        manager.insertClass(UMLUMLSET);
+        manager.insertClass(UMLCLASS);
+        manager.insertClass(UMLINTERFACE);
+        manager.insertClass(UMLASSOCIATIONCLASS);
+        manager.insertClass(UMLFEATURE);
+
+        manager.insertClass(UMLASSOCIATIONEND);
+        manager.insertClass(UMLASSOCIATION);
+        manager.insertClass(UMLATTRIBUTE);
+        manager.insertClass(UMLOPERATION);
+        manager.insertClass(UMLPARAMETER);
+        manager.insertGeneralization(UMLASSOCIATION, UMLMODELELEMENT);
+        manager.insertGeneralization(UMLCLASSIFIER, UMLMODELELEMENT);
+        manager.insertGeneralization(UMLTYPED, UMLMODELELEMENT);
+        manager.insertGeneralization(UMLDATATYPE, UMLCLASSIFIER);
+        manager.insertGeneralization(UMLUMLSET, UMLDATATYPE);
+        manager.insertGeneralization(UMLCLASS, UMLCLASSIFIER);
+        manager.insertGeneralization(UMLINTERFACE, UMLCLASSIFIER);
+        manager.insertGeneralization(UMLASSOCIATIONCLASS, UMLCLASS);
+        manager.insertGeneralization(UMLASSOCIATIONCLASS, UMLASSOCIATION);
+        manager.insertGeneralization(UMLFEATURE, UMLTYPED);
+        manager.insertGeneralization(UMLASSOCIATIONEND, UMLFEATURE);
+        manager.insertGeneralization(UMLATTRIBUTE, UMLFEATURE);
+        manager.insertGeneralization(UMLOPERATION, UMLFEATURE);
+        manager.insertGeneralization(UMLPARAMETER, UMLTYPED);
+
+        manager.insertAttribute(UMLMODELELEMENT, "name", "String");
+        manager.insertAttribute(UMLFEATURE, "visibility", "String");
+        manager.insertAttribute(UMLASSOCIATIONEND, "lower", "String");
+        manager.insertAttribute(UMLASSOCIATIONEND, "upper", "String");
+        manager.insertAttribute(UMLASSOCIATIONEND, "composition", "Boolean");
+
+        manager.insertAssociation(UMLASSOCIATIONEND, "otherEnd", CARD_0_1, CARD_0_N, "others", UMLASSOCIATIONEND);
+        manager.insertAssociation(UMLASSOCIATIONEND, "associationEnds", CARD_1_N, CARD_1, "association", UMLASSOCIATION);
+        manager.insertAssociation(UMLOPERATION, "operation", CARD_1, CARD_N, "parameter", UMLPARAMETER);
+        manager.insertAssociation(UMLCLASS, "class", CARD_0_1, CARD_N, "feature", UMLFEATURE);
+        manager.insertAssociation(UMLCLASS, "classes", CARD_N, CARD_N, "implementedInterfaces", UMLINTERFACE);
+        manager.insertAssociation(UMLCLASS, "inheritsFrom", CARD_N, CARD_N, "inheritedBy", UMLCLASS);
+        manager.insertAssociation(UMLCLASSIFIER, "classifier", CARD_0_1, CARD_N, "types", UMLTYPED);
+        manager.insertAssociation(UMLUMLSET, "setA", CARD_0_N, CARD_1, "elementType", UMLCLASSIFIER);
     }
 }

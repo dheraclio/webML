@@ -4,6 +4,7 @@
  */
 package br.uff.ic.mda.transformer.core.util;
 
+import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.ModelManager;
 
 /**
@@ -34,4 +35,20 @@ public abstract class BasicModeler {
      *
      */
     protected static ModelManager manager = ModelManager.instance();
+
+    protected String getFirstQueryResult(String id, String role) throws ContractException {
+        return getFirstQueryResult(id +"."+role);
+    }
+
+    protected String getFirstQueryResult(String query) throws ContractException {
+        return JDHelper.processQueryResult(manager.query(query))[0];
+    }
+
+    protected String getId(String relationship, String role, String id) throws ContractException {
+        String[] result = JDHelper.processQueryResult(manager.query(relationship+ ".allInstances()->select(a | a."+ role + "= " + id + ")"));
+        if (result != null && result.length > 0 && !"".equals(result[0])) {
+            return result[0];
+        }
+        return null;
+    }
 }

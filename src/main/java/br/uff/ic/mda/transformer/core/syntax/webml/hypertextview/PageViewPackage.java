@@ -13,30 +13,27 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class PageViewPackage extends WebMLBasicPackage {
 
-    public static final String PAGE = "Page";
+    public static final String PAGE = PREFIX + "Page";
     public static final String PAGE_PROTECTED = "protected";
     public static final String PAGE_SECURE = "secure";
     public static final String PAGE_LANDMARK = "landmark";
-    public static final String PAGEELEMENT = "PageElement";
-    public static final String CHOREOGRAPHY = "Choreography";
-    public static final String CHOREOGRAPHYSEQUENCE = "ChoreographySequence";
-    public static final String CHOREOGRAPHYPROPAGATION = "ChoreographyPropagation";
-   
+    public static final String PAGEELEMENT = PREFIX + "PageElement";
+    public static final String CHOREOGRAPHY = PREFIX + "Choreography";
+    public static final String CHOREOGRAPHYSEQUENCE = PREFIX + "ChoreographySequence";
+    public static final String CHOREOGRAPHYPROPAGATION = PREFIX + "ChoreographyPropagation";
     //ASSOCIATIONS
-    public static final String ASSOCIATIONROLE_HOMEPAGE = "homePage";
-    public static final String ASSOCIATIONROLE_HOMEPAGEOF = "homePageOf";
-    public static final String ASSOCIATIONROLE_DEFAULTPAGE = "defaultPage";
-    public static final String ASSOCIATIONROLE_DEFAULTPAGEOF = "defaultPageOf";
-    public static final String ASSOCIATIONROLE_SOURCEPAGE = "sourcePage";
-    public static final String ASSOCIATIONROLE_SOURCEPAGEOF = "sourcePageOf";
-    public static final String ASSOCIATIONROLE_TARGETPAGE = "targetPage";
-    public static final String ASSOCIATIONROLE_TARGETPAGEOF = "targetPageOf";
-
-    public static final String ASSOCIATIONROLE_CONTENT = "content";
-    public static final String ASSOCIATIONROLE_CONTENTOF = "contentOf";
-
-    public static final String ASSOCIATIONROLE_LINK = "link";
-    public static final String ASSOCIATIONROLE_LINKOF = "linkOf";
+    public static final String ROLE_HOMEPAGE = "homePage";
+    public static final String ROLE_HOMEPAGEOF = "homePageOf";
+    public static final String ROLE_DEFAULTPAGE = "defaultPage";
+    public static final String ROLE_DEFAULTPAGEOF = "defaultPageOf";
+    public static final String ROLE_SOURCEPAGE = "sourcePage";
+    public static final String ROLE_SOURCEPAGEOF = "sourcePageOf";
+    public static final String ROLE_TARGETPAGE = "targetPage";
+    public static final String ROLE_TARGETPAGEOF = "targetPageOf";
+    public static final String ROLE_CONTENT = "content";
+    public static final String ROLE_CONTENTOF = "contentOf";
+    public static final String ROLE_LINK = "link";
+    public static final String ROLE_LINKOF = "linkOf";
 
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(PAGE);
@@ -62,15 +59,15 @@ public class PageViewPackage extends WebMLBasicPackage {
     }
 
     public static void insertMetaModelAssociations() throws ContractException {
-        manager.insertAssociation(PAGE, ASSOCIATIONROLE_HOMEPAGE, CARD_1, CARD_1, ASSOCIATIONROLE_HOMEPAGEOF, SiteViewPackage.SITEVIEW);
+        manager.insertAssociation(PAGE, ROLE_HOMEPAGE, CARD_1, CARD_1, ROLE_HOMEPAGEOF, SiteViewPackage.SITEVIEW);
 
-        //manager.insertAssociation(PAGE, ASSOCIATIONROLE_DEFAULTPAGE, CARD_0_1, CARD_1, ASSOCIATIONROLE_DEFAULTPAGEOF, PAGE);
-        manager.insertAssociation(PAGE, ASSOCIATIONROLE_DEFAULTPAGE, CARD_0_1, CARD_1, ASSOCIATIONROLE_DEFAULTPAGEOF, AreaViewPackage.AREA);
+        //manager.insertAssociation(PAGE, ROLE_DEFAULTPAGE, CARD_0_1, CARD_1, ROLE_DEFAULTPAGEOF, PAGE);
+        manager.insertAssociation(PAGE, ROLE_DEFAULTPAGE, CARD_0_1, CARD_1, ROLE_DEFAULTPAGEOF, AreaViewPackage.AREA);
 
-        manager.insertAssociation(PAGE, ASSOCIATIONROLE_SOURCEPAGE, CARD_1, CARD_0_N, ASSOCIATIONROLE_SOURCEPAGEOF, LinkViewPackage.LINK);
-        manager.insertAssociation(PAGE, ASSOCIATIONROLE_TARGETPAGE, CARD_1, CARD_0_N, ASSOCIATIONROLE_TARGETPAGEOF, LinkViewPackage.LINK);
+        manager.insertAssociation(PAGE, ROLE_SOURCEPAGE, CARD_1, CARD_0_N, ROLE_SOURCEPAGEOF, LinkViewPackage.LINK);
+        manager.insertAssociation(PAGE, ROLE_TARGETPAGE, CARD_1, CARD_0_N, ROLE_TARGETPAGEOF, LinkViewPackage.LINK);
 
-        manager.insertAssociation(CHOREOGRAPHY, ASSOCIATIONROLE_LINK, CARD_1, CARD_1_N, ASSOCIATIONROLE_LINKOF, LinkViewPackage.LINK);
-        manager.insertAssociation(CHOREOGRAPHY, ASSOCIATIONROLE_CONTENT, CARD_1, CARD_1_N, ASSOCIATIONROLE_CONTENTOF, UnitViewPackage.CONTENTUNIT);
+        manager.insertAssociation(CHOREOGRAPHY, ROLE_LINK, CARD_1, CARD_1_N, ROLE_LINKOF, LinkViewPackage.LINK);
+        manager.insertAssociation(CHOREOGRAPHY, ROLE_CONTENT, CARD_1, CARD_1_N, ROLE_CONTENTOF, UnitViewPackage.CONTENTUNIT);
     }
 }

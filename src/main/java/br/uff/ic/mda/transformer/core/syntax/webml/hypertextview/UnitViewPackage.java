@@ -14,19 +14,19 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class UnitViewPackage extends WebMLBasicPackage {
 
-    public static final String UNIT = "Unit";
+    public static final String UNIT = PREFIX + "Unit";
 
-    public static final String CONTENTUNIT = "ContentUnit";
+    public static final String CONTENTUNIT = PREFIX + "ContentUnit";
     public static final String CONTENTUNIT_TYPE = "type";
-    public static final String OPERATIONUNIT = "OperationUnit";
+    public static final String OPERATIONUNIT = PREFIX + "OperationUnit";
     public static final String OPERATIONUNIT_SECURE = "secure";
-    public static final String GETUNIT = "GetUnit";
+    public static final String GETUNIT = PREFIX + "GetUnit";
 
 
-    public static final String ASSOCIATIONROLE_SOURCEUNIT = "sourceUnit";
-    public static final String ASSOCIATIONROLE_SOURCEUNITOF = "sourceUnitOf";
-    public static final String ASSOCIATIONROLE_TARGETPAGE = "targetUnit";
-    public static final String ASSOCIATIONROLE_TARGETPAGEOF = "targetUnitOf";
+    public static final String ROLE_SOURCEUNIT = "sourceUnit";
+    public static final String ROLE_SOURCEUNITOF = "sourceUnitOf";
+    public static final String ROLE_TARGETPAGE = "targetUnit";
+    public static final String ROLE_TARGETPAGEOF = "targetUnitOf";
 
     public static void insertMetaModel() throws ContractException{
         manager.insertClass(UNIT);
@@ -54,8 +54,8 @@ public class UnitViewPackage extends WebMLBasicPackage {
 
     public static void insertMetaModelAssociations() throws ContractException{
         
-        manager.insertAssociation(UNIT, ASSOCIATIONROLE_SOURCEUNIT, CARD_1, CARD_0_N, ASSOCIATIONROLE_SOURCEUNITOF, LinkViewPackage.LINK);
-        manager.insertAssociation(UNIT, ASSOCIATIONROLE_TARGETPAGE, CARD_1, CARD_0_N, ASSOCIATIONROLE_TARGETPAGEOF, LinkViewPackage.LINK);
+        manager.insertAssociation(UNIT, ROLE_SOURCEUNIT, CARD_1, CARD_0_N, ROLE_SOURCEUNITOF, LinkViewPackage.LINK);
+        manager.insertAssociation(UNIT, ROLE_TARGETPAGE, CARD_1, CARD_0_N, ROLE_TARGETPAGEOF, LinkViewPackage.LINK);
     }
 
 

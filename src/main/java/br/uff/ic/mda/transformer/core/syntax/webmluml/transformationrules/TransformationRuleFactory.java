@@ -5,6 +5,7 @@ import br.uff.ic.mda.transformer.UMLDomain;
 import br.uff.ic.mda.transformer.WebMLDomain;
 import br.uff.ic.mda.transformer.WebMLUMLDomain;
 import br.uff.ic.mda.transformer.core.syntax.webmluml.WebMLUMLMetaModeler;
+import java.util.LinkedList;
 
 /**
  *
@@ -12,22 +13,47 @@ import br.uff.ic.mda.transformer.core.syntax.webmluml.WebMLUMLMetaModeler;
  */
 public class TransformationRuleFactory {
 
-    /**
-     *
-     * @param rule
-     * @param domain
-     * @return
-     * @throws ContractException
-     *
-     */
-    public static TransformationRule get(String rule,WebMLUMLDomain domain) throws ContractException {
-        if (WebMLUMLMetaModeler.RELATIONSHIPTR.equals(rule)) {
+    public static final String RELATIONSHIPTR = "RelationshipTR";
+    public static final String ENTITYTR = "EntityTR";
+    public static final String ATTRIBUTETR = "AttributeTR";
+    public static final String TYPETR = "TypeTR";
+    private static LinkedList<String> ruleNames = new LinkedList<String>();
+    private static LinkedList<TransformationRule> transformationRules = new LinkedList<TransformationRule>();
+
+    public static LinkedList<TransformationRule> getRules(WebMLUMLDomain domain) throws ContractException {
+        if (transformationRules.isEmpty()) {
+            for (String rule : getRuleNames()) {
+                TransformationRule tr = TransformationRuleFactory.get(rule, domain);
+                if (tr != null) {
+                    transformationRules.add(tr);
+                }
+            }
+        }
+        return transformationRules;
+    }
+
+    private static TransformationRule get(String rule,WebMLUMLDomain domain) throws ContractException {
+        if (RELATIONSHIPTR.equals(rule)) {
             return new RelationshipTR(domain);
-        } if (WebMLUMLMetaModeler.ENTITYTR.equals(rule)) {
+        } if (ENTITYTR.equals(rule)) {
             return new EntityTR(domain);
+        } if (TYPETR.equals(rule)) {
+            return new TypeTR(domain);
+        } if (ATTRIBUTETR.equals(rule)) {
+            return new AttributeTR(domain);
         } else {
             throw new ContractException(ContractException.MSG_TRANSFORMATIONEXCEPTION);
         }
     }
 
+    private static LinkedList<String> getRuleNames() {
+        //Order of execution
+        if (ruleNames.isEmpty()) {
+            ruleNames.add(TYPETR);
+            ruleNames.add(ATTRIBUTETR);
+            ruleNames.add(ENTITYTR);   
+            ruleNames.add(RELATIONSHIPTR);
+        }
+        return ruleNames;
+    }
 }

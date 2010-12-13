@@ -76,17 +76,6 @@ public class WebMLDomain extends Domain {
      */
     @Override
     public void createSpecificationOfCurrentDiagram() throws ContractException {
-        ModelManager manager = ModelManager.instance();
-        //UML Standart Elements (from XMIParser)
-        manager.insertObject("DataType", "UMLInteger");
-        manager.insertValue("DataType", "name", "UMLInteger", "Integer");
-
-        manager.insertObject("DataType", "UMLString");
-        manager.insertValue("DataType", "name", "UMLString", "String");
-
-        manager.insertObject("DataType", "UMLBoolean");
-        manager.insertValue("DataType", "name", "UMLBoolean", "Boolean");
-
         CommonElementsPackage.createSpecification();
     }
 

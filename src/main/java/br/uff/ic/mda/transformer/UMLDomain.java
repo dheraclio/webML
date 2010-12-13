@@ -71,8 +71,8 @@ public class UMLDomain extends Domain {
      *
      * @throws ContractException
      */
-    public void printDomain() throws ContractException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    @Override
+    public void printDomain() throws ContractException {        
     }
 
     @Override
@@ -156,8 +156,8 @@ public class UMLDomain extends Domain {
                 } else {
                     operationType = ModelManager.instance().query("DataType.allInstances()->select(dt | dt.name = '" + element.getName() + "')->asOrderedSet()->first()");
                     if (operationType == null || "null".equals(operationType)) {
-                    operationType = processID(operation.getType());
-                }
+                        operationType = processID(operation.getType());
+                    }
                 }
                 this.insertOperation(operation.getId(), operation.getName(), operation.getVisibility(), operationType, classeEntry.getValue().getId());
                 for (UMLElement parameter : operation.getParameters()) {
@@ -174,8 +174,8 @@ public class UMLDomain extends Domain {
                             } else {
                                 parameterType = ModelManager.instance().query("DataType.allInstances()->select(dt | dt.name = '" + pElement.getName() + "')->asOrderedSet()->first()");
                                 if (parameterType == null || "null".equals(parameterType)) {
-                                parameterType = processID(operation.getParameterType(parameter.getId()));
-                            }
+                                    parameterType = processID(operation.getParameterType(parameter.getId()));
+                                }
                             }
 //                            if ("String".equals(pElement.getName()) || "Boolean".equals(pElement.getName())) {
 //                                parameterType = "UML" + pElement.getName();
@@ -220,28 +220,17 @@ public class UMLDomain extends Domain {
         manager.insertObject("Association", "NULL_ASSOCIATION");
 
         //UML Standart Elements (from XMIParser)
-        manager.insertObject("DataType", "UMLInteger");
-        manager.insertValue("DataType", "name", "UMLInteger", "Integer");
-
-        manager.insertObject("DataType", "UMLString");
-        manager.insertValue("DataType", "name", "UMLString", "String");
-
-        manager.insertObject("DataType", "UMLBoolean");
-        manager.insertValue("DataType", "name", "UMLBoolean", "Boolean");
+        insertType("UMLInteger","Integer");
+        insertType("UMLString","String");
+        insertType("UMLBoolean", "Boolean");
 
         //Java Profile
-        manager.insertObject("DataType", "UMLDate");
-        manager.insertValue("DataType", "name", "UMLDate", "Date");
-
-        manager.insertObject("DataType", "UMLVoid");
-        manager.insertValue("DataType", "name", "UMLVoid", "void");
+        insertType("UMLDate", "Date");
+        insertType("UMLVoid", "void");
 
         // Other
-        manager.insertObject("DataType", "UMLDouble");
-        manager.insertValue("DataType", "name", "UMLDouble", "Double");
-
-        manager.insertObject("DataType", "UMLReal");
-        manager.insertValue("DataType", "name", "UMLReal", "Real");
+        insertType( "UMLDouble", "Double");
+        insertType("UMLReal", "Real");
     }
 
     /**
@@ -428,9 +417,9 @@ public class UMLDomain extends Domain {
                 + "->first()"
                 + ".class"
                 + ".getOuterMostContainer() "
-//                + ".getOuterMostContainer()"
-//                + "->asOrderedSet()"
-//                + "->first() "
+                //                + ".getOuterMostContainer()"
+                //                + "->asOrderedSet()"
+                //                + "->first() "
                 + "else "
                 + "self "
                 + "endif", new Object[0]);
@@ -504,15 +493,29 @@ public class UMLDomain extends Domain {
      * @return
      * @throws ContractException
      */
-    private boolean insertAttribute(String id, String name, String visibility, String type, String classId) throws ContractException {
+    public boolean insertAttribute(String id, String name, String visibility, String type, String classId) throws ContractException {
         ModelManager manager = ModelManager.instance();
         boolean result = true;
         result &= manager.insertObject("Attribute", id);
         result &= manager.insertValue("Attribute", "name", id, name == null ? "" : name);
         result &= manager.insertValue("Attribute", "visibility", id, visibility == null ? "" : visibility);
-        result &= manager.insertLink("Attribute", id, "types", "classifier", type, "Classifier");
-        result &= manager.insertLink("Attribute", id, "feature", "class", classId, "Class");
+        result &= insertAttributeTypeLink(id, type);
+        result &= insertAttributeClassLink(id, classId);
         return result;
+    }
+
+    public boolean insertAttributeTypeLink(String id,String type) throws ContractException{
+        if (type != null) {
+            return ModelManager.instance().insertLink("Attribute", id, "types", "classifier", type, "Classifier");
+        }
+        return false;
+    }
+
+    public boolean insertAttributeClassLink(String id, String classId) throws ContractException{
+        if (classId != null) {
+            return ModelManager.instance().insertLink("Attribute", id, "feature", "class", classId, "Class");
+        }
+        return false;
     }
 
     // Operation
@@ -621,5 +624,12 @@ public class UMLDomain extends Domain {
         result &= manager.insertLink("AssociationEnd", associationEnd, "others", "otherEnd", otherEnd, "AssociationEnd");
         result &= manager.insertLink("AssociationEnd", otherEnd, "others", "otherEnd", associationEnd, "AssociationEnd");
         return result;
+    }
+
+    public void insertType(String objectName, String value) throws ContractException {
+        final String className = "DataType";
+        final String attrName = "name";
+        ModelManager.instance().insertObject(className, objectName);
+        ModelManager.instance().insertValue(className, attrName, objectName, value);
     }
 }

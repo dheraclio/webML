@@ -14,8 +14,8 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class CorePackage extends WebMLBasicPackage {
 
-    public static final String HYPERTEXTMODEL = "HypertextModel";
-    public static final String HYPERTEXTMODELELEMENT = "HypertextModelElement";
+    public static final String HYPERTEXTMODEL = PREFIX +"HypertextModel";
+    public static final String HYPERTEXTMODELELEMENT = PREFIX +"HypertextModelElement";
 
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(HYPERTEXTMODEL);

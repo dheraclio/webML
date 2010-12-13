@@ -14,16 +14,16 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class AreaViewPackage extends WebMLBasicPackage {
 
-    public static final String AREA = "Area";
+    public static final String AREA = PREFIX + "Area";
     public static final String AREA_SECURE = "secure";
     public static final String AREA_LOCALIZED = "localized";
     public static final String AREA_LANDMARK = "landmark";
     public static final String AREA_PROTECTED = "protected";
 
-    public static final String AREAELEMENT = "AreaElement";
+    public static final String AREAELEMENT = PREFIX + "AreaElement";
 
-    public static final String ASSOCIATIONROLE_DEFAULTAREA = "defaultArea";
-    public static final String ASSOCIATIONROLE_DEFAULTAREAOF = "defaultAreaOf";
+    public static final String ROLE_DEFAULTAREA = "defaultArea";
+    public static final String ROLE_DEFAULTAREAOF = "defaultAreaOf";
 
     public static void insertMetaModel() throws ContractException{
 
@@ -46,7 +46,7 @@ public class AreaViewPackage extends WebMLBasicPackage {
     public static void insertMetaModelAssociations() throws ContractException{
         manager.insertAssociation(AREA, ROLE_OWNER, CARD_0_N, CARD_0_1, ROLE_ELEMENT, AREAELEMENT);
         
-        manager.insertAssociation(AREA, ASSOCIATIONROLE_DEFAULTAREAOF, CARD_0_1, CARD_0_1, ASSOCIATIONROLE_DEFAULTAREA, SiteViewPackage.SITEVIEW);
-        //manager.insertAssociation(AREA, ASSOCIATIONROLE_DEFAULTAREAOF, CARD_0_1, CARD_0_1, ASSOCIATIONROLE_DEFAULTAREA, AREA);
+        manager.insertAssociation(AREA, ROLE_DEFAULTAREAOF, CARD_0_1, CARD_0_1, ROLE_DEFAULTAREA, SiteViewPackage.SITEVIEW);
+        //manager.insertAssociation(AREA, ROLE_DEFAULTAREAOF, CARD_0_1, CARD_0_1, ROLE_DEFAULTAREA, AREA);
     }
 }

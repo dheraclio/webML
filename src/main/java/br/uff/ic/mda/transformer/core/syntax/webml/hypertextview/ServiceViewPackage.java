@@ -14,13 +14,13 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class ServiceViewPackage extends WebMLBasicPackage {
 
-    public static final String SERVICEVIEW = "ServiceView";
+    public static final String SERVICEVIEW = PREFIX + "ServiceView";
     public static final String SERVICEVIEW_SECURE = "secure";
 
-    public static final String PORT = "Port";
+    public static final String PORT = PREFIX + "Port";
     public static final String PORT_SECURE = "secure";
 
-    public static final String PORTELEMENT = "PortElement";
+    public static final String PORTELEMENT = PREFIX + "PortElement";
 
     public static void insertMetaModel() throws ContractException{
         manager.insertClass(SERVICEVIEW);

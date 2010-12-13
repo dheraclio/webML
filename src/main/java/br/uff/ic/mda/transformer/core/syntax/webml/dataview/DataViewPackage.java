@@ -17,16 +17,18 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class DataViewPackage extends WebMLBasicPackage {
 
-    public static final String DATAMODEL = "DataModel";
-    public static final String DATAMODELELEMENT = "DataModelElement";
-    public static final String RELATIONSHIP = "Relationship";
-    public static final String RELATIONSHIPROLE = "RelationshipRole";
+    public static final String DATAMODEL = PREFIX + "DataModel";
+    public static final String DATAMODELELEMENT = PREFIX + "DataModelElement";
+    public static final String RELATIONSHIP = PREFIX + "Relationship";
+    public static final String RELATIONSHIPROLE = PREFIX + "RelationshipRole";
     public static final String RELATIONSHIPROLE_MINCARD = "minCard";
     public static final String RELATIONSHIPROLE_MAXCARD = "maxCard";
-    public static final String ENTITY = "Entity";
+    public static final String ENTITY = PREFIX + "Entity";
     public static final String ENTITY_DURATION = "duration";
-    public static final String ATTRIBUTE = "Attribute";
+    public static final String ATTRIBUTE = PREFIX + "Attribute";
     public static final String ATTRIBUTE_CONTENTTYPE = "contentType";
+    
+    //Roles
     public static final String ROLE_ATTRIBUTE = "attribute";
     public static final String ROLE_ATTRIBUTEOF = "attributeOf";
 
@@ -46,11 +48,15 @@ public abstract class DataViewPackage extends WebMLBasicPackage {
         manager.insertGeneralization(DATAMODELELEMENT, CommonElementsPackage.NAMEDELEMENT);
         manager.insertGeneralization(DATAMODELELEMENT, CommonElementsPackage.DOMAIN);
 
-        manager.insertGeneralization(RELATIONSHIP, DATAMODELELEMENT);
 
+        manager.insertGeneralization(RELATIONSHIP, DATAMODELELEMENT);        
         manager.insertGeneralization(ENTITY, DATAMODELELEMENT);
 
         manager.insertGeneralization(ATTRIBUTE, CommonElementsPackage.ELEMENTWITHTYPE);
+
+        //UML base types
+        manager.insertGeneralization(RELATIONSHIP, CommonElementsPackage.UMLCLASS);
+        manager.insertGeneralization(ENTITY, CommonElementsPackage.UMLCLASS);
 
         insertMetamodelAttributes();
         insertMetamodelAssociations();
@@ -68,5 +74,7 @@ public abstract class DataViewPackage extends WebMLBasicPackage {
         manager.insertAssociation(ENTITY, ROLE_SUB, CARD_1, CARD_0_1, ROLE_SUPER, ENTITY);
 
         manager.insertAssociation(ENTITY, ROLE_ATTRIBUTEOF, CARD_1_N, CARD_0_N, ROLE_ATTRIBUTE, ATTRIBUTE);
+
+        //manager.insertAssociation("Class", "class", "0..1", "*", "feature", "Feature");
     }
 }

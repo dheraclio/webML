@@ -14,8 +14,8 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class TransactionViewPackage extends WebMLBasicPackage {
 
-    public static final String TRANSACTION = "Transaction";
-    public static final String TRANSACTIONELEMENT = "TransactionElement";
+    public static final String TRANSACTION = PREFIX + "Transaction";
+    public static final String TRANSACTIONELEMENT = PREFIX + "TransactionElement";
 
     public static void insertMetaModel() throws ContractException{
         manager.insertClass(TRANSACTION);
