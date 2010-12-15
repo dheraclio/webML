@@ -20,12 +20,22 @@ public abstract class BasicTR extends BasicModeler{
     private String transformQuery;
     private String linkQuery;
 
+    /**
+     *
+     * @param transformQuery
+     * @param linkQuery
+     * @param domain
+     */
     protected BasicTR(String transformQuery, String linkQuery,WebMLUMLDomain domain) {
         setTransformQuery(transformQuery);
         setLinkQuery(linkQuery);
         setDomain(domain);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public void link() throws ContractException {
 
         String query = getLinkQuery();
@@ -39,8 +49,17 @@ public abstract class BasicTR extends BasicModeler{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws ContractException
+     */
     protected abstract void doLink(String id) throws ContractException;
 
+    /**
+     *
+     * @throws ContractException
+     */
     public void transform() throws ContractException {
         String query = getTransformQuery();
 
@@ -54,6 +73,12 @@ public abstract class BasicTR extends BasicModeler{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @throws ContractException
+     */
     protected abstract void doTransformation(String id, String name) throws ContractException;
 
     /**
@@ -98,6 +123,12 @@ public abstract class BasicTR extends BasicModeler{
         this.domain = domain;
     }
 
+    /**
+     *
+     * @param webmlId
+     * @return
+     * @throws ContractException
+     */
     protected String findUMLTypeIdFromWebMLTypeId(String webmlId) throws ContractException {
 
         // Procura por Class -> Entity
@@ -109,6 +140,12 @@ public abstract class BasicTR extends BasicModeler{
         return null;
     }
 
+    /**
+     *
+     * @param webmlId
+     * @return
+     * @throws ContractException
+     */
     protected String findUMLClassFromWebMLId(String webmlId) throws ContractException {
 
         // Procura por Class -> Entity

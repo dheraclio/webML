@@ -15,6 +15,10 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class PresentationViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         //Not supplied by profile creators
     }

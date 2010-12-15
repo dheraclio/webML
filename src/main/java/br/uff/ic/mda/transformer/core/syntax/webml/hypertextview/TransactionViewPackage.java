@@ -14,9 +14,19 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class TransactionViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String TRANSACTION = PREFIX + "Transaction";
+    /**
+     *
+     */
     public static final String TRANSACTIONELEMENT = PREFIX + "TransactionElement";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException{
         manager.insertClass(TRANSACTION);
         manager.insertClass(TRANSACTIONELEMENT);
@@ -26,6 +36,10 @@ public class TransactionViewPackage extends WebMLBasicPackage {
         manager.insertGeneralization(TRANSACTION,ServiceViewPackage.PORTELEMENT);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException{
         manager.insertAssociation(TRANSACTION, ROLE_OWNER, CARD_0_N, CARD_1, ROLE_ELEMENT, TRANSACTIONELEMENT);
     }

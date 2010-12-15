@@ -13,21 +13,64 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
     public class LinkViewPackage extends WebMLBasicPackage {
 
-    public static final String LINK = PREFIX +"Link";
-    public static final String LINK_DEFAULTCOUPLING = "defaultCoupling";
+        /**
+         *
+         */
+        public static final String LINK = PREFIX +"Link";
+        /**
+         *
+         */
+        public static final String LINK_DEFAULTCOUPLING = "defaultCoupling";
+    /**
+     *
+     */
     public static final String LINK_NEWWINDOW = "newWindow";
+    /**
+     *
+     */
     public static final String NONCONTEXTUALLINK = PREFIX +"NonContextualLink";
+    /**
+     *
+     */
     public static final String CONTEXTUALLINK = PREFIX +"ContextualLink";
+    /**
+     *
+     */
     public static final String KOLINK = PREFIX +"KOLink";
+    /**
+     *
+     */
     public static final String KOLINK_CODE = "code";
+    /**
+     *
+     */
     public static final String OKLINK = PREFIX +"OkLink";
+    /**
+     *
+     */
     public static final String OKLINK_CODE = "code";
+    /**
+     *
+     */
     public static final String AUTOMATIC = PREFIX +"Automatic";
+    /**
+     *
+     */
     public static final String TRANSPORT = PREFIX +"Transport";
     
+    /**
+     *
+     */
     public static final String ROLE_LINKPARAMETER = "linkParameter";
+    /**
+     *
+     */
     public static final String ROLE_LINKPARAMETEROF = "linkParameterOf";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(LINK);
         manager.insertClass(NONCONTEXTUALLINK);
@@ -57,6 +100,10 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
         manager.insertAttribute(OKLINK, OKLINK_CODE, TYPE_STRING);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException {
         manager.insertAssociation(CONTEXTUALLINK, ROLE_LINKPARAMETER, CARD_1, CARD_1_N, ROLE_LINKPARAMETEROF, ParameterViewPackage.LINKPARAMETERCOUPLING);
     }

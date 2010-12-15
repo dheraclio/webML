@@ -27,13 +27,21 @@ import java.util.Set;
 public class WebMLXMIParser {
 
     private IXMIParser parser;
-    private ModelManager manager;
+    private ModelManager manager = ModelManager.instance();
 
+    /**
+     *
+     * @param parser
+     */
     protected WebMLXMIParser(IXMIParser parser) {
         this.parser = parser;
-        this.manager = ModelManager.instance();
     }
 
+    /**
+     *
+     * @param parser
+     * @throws ContractException
+     */
     public static void parse(IXMIParser parser) throws ContractException {
         new WebMLXMIParser(parser).parse();
     }
@@ -139,10 +147,10 @@ public class WebMLXMIParser {
                     attributeTypeName = ((UMLElement) parser.getDataTypes().get(attribute.getType())).getName();
                     attributeTypeId = queryType(attributeTypeName);
                     if (attributeTypeId == null || "null".equals(attributeTypeId)) {
-                        throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class" + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
+                        throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class " + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
                     }
                 } else {
-                    throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class" + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
+                    throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class " + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
                 }
                 this.insertAttribute(attribute.getId(), attribute.getName(), attribute.getVisibility(), attributeTypeId, classEntry.getValue());
             }
@@ -281,7 +289,13 @@ public class WebMLXMIParser {
     private String queryType(String attributeTypeName) throws ContractException {
         final String startQuery = CommonElementsPackage.UMLDATATYPE + ".allInstances()->select(dt | dt.name = '";
         final String endQuery = "')->asOrderedSet()->first()";
-        return manager.query(startQuery + attributeTypeName + endQuery);
+        try {
+            return manager.query(startQuery + attributeTypeName + endQuery);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
 
     private String processID(String oldID) {

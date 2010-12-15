@@ -17,10 +17,20 @@ import br.uff.ic.mda.transformer.core.util.JDHelper;
  */
 public class EntityTR extends BasicTR implements TransformationRule {
 
+    /**
+     *
+     * @param domain
+     */
     public EntityTR(WebMLUMLDomain domain) {
         super(DataViewPackage.ENTITY + ".allInstances()", WebMLUMLMetaModeler.TR_ENTITY2CLASS + ".allInstances()", domain);
     }
 
+    /**
+     *
+     * @param id
+     * @param webmlEntityName
+     * @throws ContractException
+     */
     @Override
     protected void doTransformation(String id, String webmlEntityName) throws ContractException {
         String umlClassName = webmlEntityName;
@@ -29,6 +39,11 @@ public class EntityTR extends BasicTR implements TransformationRule {
         insertWebMLEntityToUMLClass(id, umlClassId);
     }
 
+    /**
+     *
+     * @param id
+     * @throws ContractException
+     */
     @Override
     protected void doLink(String id) throws ContractException {
     }

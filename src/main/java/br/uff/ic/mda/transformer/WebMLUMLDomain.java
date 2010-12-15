@@ -53,7 +53,7 @@ public class WebMLUMLDomain extends JoinedDomain<WebMLDomain, UMLDomain> {
      * @throws ContractException
      */
     @Override
-    public void createMetamodel() throws ContractException {
+    protected void createLocalMetamodel() throws ContractException {
         WebMLUMLMetaModeler.insertMetaModel();
     }
 
@@ -78,10 +78,18 @@ public class WebMLUMLDomain extends JoinedDomain<WebMLDomain, UMLDomain> {
         WebMLUMLMetaModeler.applyRules(this);
     }
 
+    /**
+     *
+     * @return
+     */
     public WebMLDomain getSourceDomain() {
         return sourceDomain;
     }
 
+    /**
+     *
+     * @return
+     */
     public UMLDomain getTargetDomain() {
         return targetDomain;
     }

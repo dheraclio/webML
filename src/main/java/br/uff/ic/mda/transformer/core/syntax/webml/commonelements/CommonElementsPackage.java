@@ -17,39 +17,145 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class CommonElementsPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String MODELELEMENT = PREFIX + "ModelElement";
+    /**
+     *
+     */
     public static final String ELEMENTWITHCOMMENT = PREFIX + "ElementWithComment";
+    /**
+     *
+     */
     public static final String COMMENT = PREFIX + "Comment";
+    /**
+     *
+     */
     public static final String COMMENT_BODY = "body";
+    /**
+     *
+     */
     public static final String DERIVABLEELEMENT = PREFIX + "DerivableElement";
+    /**
+     *
+     */
     public static final String DERIVATIONCONSTRAINT = PREFIX + "DerivationConstraint";
+    /**
+     *
+     */
     public static final String DERIVATIONCONSTRAINT_DERIVATIONQUERY = "derivationQuery";
+    /**
+     *
+     */
     public static final String IDENTIFIEDELEMENT = PREFIX + "IdentifiedElement";
+    /**
+     *
+     */
     public static final String IDENTIFIEDELEMENT_ID = "id";
+    /**
+     *
+     */
     public static final String ELEMENTWITHPROPERTY = PREFIX + "ElementWithProperty";
+    /**
+     *
+     */
     public static final String NAMEDELEMENT = PREFIX + "NamedElement";
+    /**
+     *
+     */
     public static final String PROPERTY = PREFIX + "Property";
+    /**
+     *
+     */
     public static final String ELEMENTWITHTYPE = PREFIX + "ElementWithType";
+    /**
+     *
+     */
     public static final String DOMAINELEMENT = PREFIX + "DomainElement";
+    /**
+     *
+     */
     public static final String TYPE = PREFIX + "Type";
+    /**
+     *
+     */
     public static final String WEBMLTYPE = PREFIX + "WebMLType";
+    /**
+     *
+     */
     public static final String DOMAIN = PREFIX + "Domain";
     //UML Base
-    public static final String UMLMODELELEMENT = "WEBMLUML_ModelElement";
-    public static final String UMLCLASSIFIER = "WEBMLUML_Classifier";
-    public static final String UMLTYPED = "WEBMLUML_Typed";
-    public static final String UMLDATATYPE = "WEBMLUML_DataType";
-    public static final String UMLUMLSET = "WEBMLUML_UMLSet";
-    public static final String UMLCLASS = "WEBMLUML_Class";
-    public static final String UMLINTERFACE = "WEBMLUML_Interface";
-    public static final String UMLASSOCIATIONCLASS = "WEBMLUML_AssociationClass";
-    public static final String UMLFEATURE = "WEBMLUML_Feature";
-    public static final String UMLASSOCIATIONEND = "WEBMLUML_AssociationEnd";
-    public static final String UMLASSOCIATION = "WEBMLUML_Association";
-    public static final String UMLATTRIBUTE = "WEBMLUML_Attribute";
-    public static final String UMLOPERATION = "WEBMLUML_Operation";
-    public static final String UMLPARAMETER = "WEBMLUML_Parameter";
+    private static final String UMLPREFIX = "WEBMLUML_";
+    /**
+     * 
+     */
+    public static final String UMLMODELELEMENT = UMLPREFIX + "ModelElement";
+    /**
+     *
+     */
+    public static final String UMLCLASSIFIER = UMLPREFIX + "Classifier";
+    /**
+     *
+     */
+    public static final String UMLTYPED = UMLPREFIX + "Typed";
+    /**
+     *
+     */
+    public static final String UMLDATATYPE = UMLPREFIX + "DataType";
+    /**
+     *
+     */
+    public static final String UMLUMLSET = UMLPREFIX + "UMLSet";
+    /**
+     *
+     */
+    public static final String UMLCLASS = UMLPREFIX + "Class";
+    /**
+     *
+     */
+    public static final String UMLINTERFACE = UMLPREFIX + "Interface";
+    /**
+     *
+     */
+    public static final String UMLASSOCIATIONCLASS = UMLPREFIX + "AssociationClass";
+    /**
+     *
+     */
+    public static final String UMLFEATURE = UMLPREFIX + "Feature";
+    /**
+     *
+     */
+    public static final String UMLASSOCIATIONEND = UMLPREFIX + "AssociationEnd";
+    /**
+     *
+     */
+    public static final String UMLASSOCIATION = UMLPREFIX + "Association";
+    /**
+     *
+     */
+    public static final String UMLATTRIBUTE = UMLPREFIX + "Attribute";
+    /**
+     *
+     */
+    public static final String UMLOPERATION = UMLPREFIX + "Operation";
+    /**
+     *
+     */
+    public static final String UMLPARAMETER = UMLPREFIX + "Parameter";
+    public static final String UMLINTEGER = UMLPREFIX + "UMLInteger";
+    public static final String UMLSTRING = UMLPREFIX + "UMLString";
+    public static final String UMLBOOLEAN = UMLPREFIX + "UMLBoolean";
+    public static final String UMLDATE = UMLPREFIX + "UMLDate";
 
+    //Java Profile
+    private static final String JAVAPREFIX = "WEBMLJAVA_";
+    public static final String JAVAVOID = JAVAPREFIX +"UMLVoid";
+
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         insertUMLBaseModel();
         manager.insertClass(MODELELEMENT);
@@ -112,21 +218,30 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
         manager.insertAssociation(DOMAIN, ROLE_OWNER, CARD_1, CARD_1_N, ROLE_ELEMENT, DOMAINELEMENT);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void createSpecification() throws ContractException {
         //UML Standart Elements (from XMIParser)
-        insertType("UMLInteger","Integer");
-        insertType("UMLString", "String");
-        insertType("UMLBoolean", "Boolean");
-        insertType("UMLDate", "Date");
+        insertType(UMLINTEGER, "Integer");
+        insertType(UMLSTRING, "String");
+        insertType(UMLBOOLEAN, "Boolean");
+        insertType(UMLDATE, "Date");
 
         //Java Profile
-        insertType("UMLVoid", "void");
+        insertType(JAVAVOID, "void");
 
         //WebML Profile
         insertType(TYPE_IDENTIFIER, "String");
-
     }
 
+    /**
+     *
+     * @param identifier
+     * @param type
+     * @throws ContractException
+     */
     protected static void insertType(String identifier, String type) throws ContractException {
         final String attName = "name";
         manager.insertObject(UMLDATATYPE, identifier);

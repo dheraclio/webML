@@ -18,10 +18,20 @@ import br.uff.ic.mda.transformer.core.util.JDHelper;
  */
 public class TypeTR extends BasicTR implements TransformationRule {
 
+    /**
+     *
+     * @param domain
+     */
     public TypeTR(WebMLUMLDomain domain) {
         super(CommonElementsPackage.UMLDATATYPE + ".allInstances()", WebMLUMLMetaModeler.TR_WEBMLDATATYPE2UMLDATATYPE + ".allInstances()", domain);
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @throws ContractException
+     */
     @Override
     protected void doTransformation(String id, String name) throws ContractException {
         String umlId = id;
@@ -30,6 +40,11 @@ public class TypeTR extends BasicTR implements TransformationRule {
         insertLink(id, umlId);
     }
 
+    /**
+     *
+     * @param id
+     * @throws ContractException
+     */
     @Override
     protected void doLink(String id) throws ContractException {
     }

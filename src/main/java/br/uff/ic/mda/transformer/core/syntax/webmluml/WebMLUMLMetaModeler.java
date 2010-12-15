@@ -28,20 +28,49 @@ import java.util.LinkedList;
 public abstract class WebMLUMLMetaModeler extends BasicModeler {
 
     //WebMLUML prefix
+    /**
+     *
+     */
     public static final String PREFIX = "WebMLUML_";
     //WebML types to UML types
-    public static final String TR_WEBMLDATATYPE2UMLDATATYPE = PREFIX + "WebMLDataType2UMLDataType";
+    /**
+     *
+     */
+    public static final String TR_WEBMLDATATYPE2UMLDATATYPE = PREFIX + "DataType2UMLDataType";
+    //WebML Attribute to UML Attribute
+    /**
+     *
+     */
+    public static final String TR_ATTRIBUTE2ATTRIBUTE = PREFIX + "Attribute2UMLAttribute";
+    //WebML Entity to UML Class
+    /**
+     *
+     */
+    public static final String TR_ENTITY2CLASS = PREFIX + "Entity2UMLClass";
+    //WebML Relationship to UML Association
+    /**
+     *
+     */
+    public static final String TR_RELATIONSHIP2ASSOCIATION = PREFIX + "RelationshipToAssociation";
+
+    /**
+     *
+     */
     public static final String ROLE_WEBML = "webml";
+    /**
+     *
+     */
     public static final String ROLE_UML = "uml";
+    /**
+     *
+     */
     public static final String ROLE_TRANSFORM = "transformer";
 
-    //WebML Attribute to UML Attribute
-    public static final String TR_ATTRIBUTE2ATTRIBUTE = PREFIX + "WebMLAttribute2UMLAttribute";
-    //WebML Entity to UML Class
-    public static final String TR_ENTITY2CLASS = PREFIX + "WebMLEntity2UMLClass";    
-    //WebML Relationship to UML Association
-    public static final String TR_RELATIONSHIP2ASSOCIATION = PREFIX + "WebMLRelationshipToAssociation";
-
+    /**
+     *
+     * @param aThis
+     * @throws ContractException
+     */
     public static void applyRules(WebMLUMLDomain aThis) throws ContractException {
 
         //First transform
@@ -55,6 +84,10 @@ public abstract class WebMLUMLMetaModeler extends BasicModeler {
         }
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         insertMetaModelClasses();
         insertMetaModelAssociations();

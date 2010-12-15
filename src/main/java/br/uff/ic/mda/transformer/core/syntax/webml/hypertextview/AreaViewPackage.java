@@ -14,17 +14,45 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class AreaViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String AREA = PREFIX + "Area";
+    /**
+     *
+     */
     public static final String AREA_SECURE = "secure";
+    /**
+     *
+     */
     public static final String AREA_LOCALIZED = "localized";
+    /**
+     *
+     */
     public static final String AREA_LANDMARK = "landmark";
+    /**
+     *
+     */
     public static final String AREA_PROTECTED = "protected";
 
+    /**
+     *
+     */
     public static final String AREAELEMENT = PREFIX + "AreaElement";
 
+    /**
+     *
+     */
     public static final String ROLE_DEFAULTAREA = "defaultArea";
+    /**
+     *
+     */
     public static final String ROLE_DEFAULTAREAOF = "defaultAreaOf";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException{
 
         manager.insertClass(AREA);
@@ -43,6 +71,10 @@ public class AreaViewPackage extends WebMLBasicPackage {
         manager.insertAttribute(AREA, AREA_PROTECTED, TYPE_BOOLEAN);      
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException{
         manager.insertAssociation(AREA, ROLE_OWNER, CARD_0_N, CARD_0_1, ROLE_ELEMENT, AREAELEMENT);
         

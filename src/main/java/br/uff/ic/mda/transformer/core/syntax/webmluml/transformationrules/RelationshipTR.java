@@ -15,14 +15,29 @@ import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
  */
 public class RelationshipTR extends BasicTR implements TransformationRule {
 
+    /**
+     *
+     * @param domain
+     */
     public RelationshipTR(WebMLUMLDomain domain) {
         super(DataViewPackage.RELATIONSHIP + ".allInstances()", DataViewPackage.RELATIONSHIP + ".allInstances()", domain);
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @throws ContractException
+     */
     @Override
     protected void doTransformation(String id, String name) throws ContractException {
     }
 
+    /**
+     *
+     * @param id
+     * @throws ContractException
+     */
     @Override
     protected void doLink(String id) throws ContractException {
     }

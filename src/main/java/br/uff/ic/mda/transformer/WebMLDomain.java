@@ -62,10 +62,10 @@ public class WebMLDomain extends Domain {
     @Override
     public void createMetamodel() throws ContractException {
         //Ordered throught dependencies
-        insertCommonElementsPackage();
-        insertDataViewPackage();
-        insertPresentationViewPackage();
-        insertHypertextViewPackage();
+        CommonElementsPackage.insertMetaModel();
+        DataViewPackage.insertMetaModel();
+        PresentationViewPackage.insertMetaModel();
+        HypertextViewPackage.insertMetaModel();
     }
 
     /**
@@ -103,19 +103,5 @@ public class WebMLDomain extends Domain {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private void insertCommonElementsPackage() throws ContractException {
-        CommonElementsPackage.insertMetaModel();
-    }
-
-    private void insertDataViewPackage() throws ContractException {
-        DataViewPackage.insertMetaModel();
-    }
-
-    private void insertPresentationViewPackage() throws ContractException {
-        PresentationViewPackage.insertMetaModel();
-    }
-
-    private void insertHypertextViewPackage() throws ContractException {
-        HypertextViewPackage.insertMetaModel();
-    }
+    
 }

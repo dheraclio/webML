@@ -13,20 +13,60 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class ParameterViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String LINKPARAMETERCOUPLING = PREFIX + "LinkParameterCoupling";
+    /**
+     *
+     */
     public static final String LINKPARAMETERCOUPLING_PASSING = "passing";
+    /**
+     *
+     */
     public static final String LINKPARAMETERCOUPLING_LOOPBACK = "loopback";
+    /**
+     *
+     */
     public static final String PARAMETER = PREFIX + "Parameter";
+    /**
+     *
+     */
     public static final String PARAMETER_PASSING = "passing";
+    /**
+     *
+     */
     public static final String PARAMETER_LOOPBACK = "loopback";
     //ASSOCIATIONS   
+    /**
+     *
+     */
     public static final String ROLE_SOURCEUNITPARAMETER = "sourceUnitParameter";
+    /**
+     *
+     */
     public static final String ROLE_SOURCEPARAMETER = "sourceParameter";
+    /**
+     *
+     */
     public static final String ROLE_TARGETUNITPARAMETER = "targetUnitParameter";
+    /**
+     *
+     */
     public static final String ROLE_TARGETPARAMETER = "targetParameter";
+    /**
+     *
+     */
     public static final String ROLE_OUTPUTPARAMETER = "outputParameter";
+    /**
+     *
+     */
     public static final String ROLE_INPUTPARAMETER = "inputParameter";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(LINKPARAMETERCOUPLING);
         manager.insertClass(PARAMETER);
@@ -42,6 +82,10 @@ public class ParameterViewPackage extends WebMLBasicPackage {
         manager.insertAttribute(PARAMETER, LINKPARAMETERCOUPLING_LOOPBACK, TYPE_BOOLEAN);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException {
         //TODO completar
     }

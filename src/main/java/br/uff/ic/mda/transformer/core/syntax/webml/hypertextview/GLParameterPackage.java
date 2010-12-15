@@ -17,14 +17,36 @@ import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
  */
 public class GLParameterPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String LOCALPARAMETER = PREFIX +"LocalParameter";
+    /**
+     *
+     */
     public static final String GLPARAMETER = PREFIX +"GLParameter";
+    /**
+     *
+     */
     public static final String GLPARAMETER_TYPE = "type";
+    /**
+     *
+     */
     public static final String GLOBALPARAMETER = PREFIX +"GLOBALParameter";
 
+    /**
+     *
+     */
     public static final String ROLE_TYPE = "type";
+    /**
+     *
+     */
     public static final String ROLE_TYPED = "typed";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException{
         manager.insertClass(LOCALPARAMETER);
         manager.insertClass(GLPARAMETER);
@@ -42,6 +64,10 @@ public class GLParameterPackage extends WebMLBasicPackage {
         //manager.insertAttribute(GLPARAMETER, GLPARAMETER_TYPE, WEBMLTYPE);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException{
         manager.insertAssociation(DataViewPackage.ENTITY, ROLE_OWNER, CARD_0_N, CARD_0_1, ROLE_ELEMENT, GLOBALPARAMETER);
 

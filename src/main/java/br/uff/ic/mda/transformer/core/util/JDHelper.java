@@ -17,11 +17,22 @@ import java.util.List;
  */
 public abstract class JDHelper {
 
+    /**
+     *
+     * @return
+     */
     public static String getNewId(){
         final String prefix = "ID";
         return  prefix + System.nanoTime();
     }
 
+    /**
+     *
+     * @param id
+     * @param manager
+     * @return
+     * @throws ContractException
+     */
     public static String getName(String id, ModelManager manager) throws ContractException{
         final String name = ".name";
         return  manager.query(id + name).replace("'", "");

@@ -12,7 +12,13 @@ import br.uff.ic.mda.transformer.core.util.BasicModeler;
  */
 public abstract class WebMLBasicPackage extends BasicModeler {
 
+    /**
+     *
+     */
     public static final String TYPE_IDENTIFIER = "IdentifierType";
     
+    /**
+     *
+     */
     public static final String PREFIX = "WEBML_";
 }

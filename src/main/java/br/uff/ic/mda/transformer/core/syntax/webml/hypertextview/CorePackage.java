@@ -14,14 +14,28 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public class CorePackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String HYPERTEXTMODEL = PREFIX +"HypertextModel";
+    /**
+     *
+     */
     public static final String HYPERTEXTMODELELEMENT = PREFIX +"HypertextModelElement";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(HYPERTEXTMODEL);
         manager.insertClass(HYPERTEXTMODELELEMENT);
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModelAssociations() throws ContractException {
         manager.insertAssociation(HYPERTEXTMODEL, ROLE_OWNER, CARD_0_N, CARD_N, ROLE_ELEMENT, HYPERTEXTMODELELEMENT);
     }

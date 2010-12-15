@@ -13,13 +13,31 @@ import java.util.LinkedList;
  */
 public class TransformationRuleFactory {
 
+    /**
+     *
+     */
     public static final String RELATIONSHIPTR = "RelationshipTR";
+    /**
+     *
+     */
     public static final String ENTITYTR = "EntityTR";
+    /**
+     *
+     */
     public static final String ATTRIBUTETR = "AttributeTR";
+    /**
+     *
+     */
     public static final String TYPETR = "TypeTR";
     private static LinkedList<String> ruleNames = new LinkedList<String>();
     private static LinkedList<TransformationRule> transformationRules = new LinkedList<TransformationRule>();
 
+    /**
+     *
+     * @param domain
+     * @return
+     * @throws ContractException
+     */
     public static LinkedList<TransformationRule> getRules(WebMLUMLDomain domain) throws ContractException {
         if (transformationRules.isEmpty()) {
             for (String rule : getRuleNames()) {

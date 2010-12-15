@@ -17,21 +17,61 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class DataViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     */
     public static final String DATAMODEL = PREFIX + "DataModel";
+    /**
+     *
+     */
     public static final String DATAMODELELEMENT = PREFIX + "DataModelElement";
+    /**
+     *
+     */
     public static final String RELATIONSHIP = PREFIX + "Relationship";
+    /**
+     *
+     */
     public static final String RELATIONSHIPROLE = PREFIX + "RelationshipRole";
+    /**
+     *
+     */
     public static final String RELATIONSHIPROLE_MINCARD = "minCard";
+    /**
+     *
+     */
     public static final String RELATIONSHIPROLE_MAXCARD = "maxCard";
+    /**
+     *
+     */
     public static final String ENTITY = PREFIX + "Entity";
+    /**
+     *
+     */
     public static final String ENTITY_DURATION = "duration";
+    /**
+     *
+     */
     public static final String ATTRIBUTE = PREFIX + "Attribute";
+    /**
+     *
+     */
     public static final String ATTRIBUTE_CONTENTTYPE = "contentType";
     
     //Roles
+    /**
+     *
+     */
     public static final String ROLE_ATTRIBUTE = "attribute";
+    /**
+     *
+     */
     public static final String ROLE_ATTRIBUTEOF = "attributeOf";
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         manager.insertClass(DATAMODEL);
         manager.insertClass(DATAMODELELEMENT);

@@ -14,6 +14,10 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  */
 public abstract class HypertextViewPackage extends WebMLBasicPackage {
 
+    /**
+     *
+     * @throws ContractException
+     */
     public static void insertMetaModel() throws ContractException {
         CorePackage.insertMetaModel();
         SiteViewPackage.insertMetaModel();

@@ -40,9 +40,9 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     public UMLEJBDomain(UMLDomain sourceDomain, EJBDomain targetDomain, Collection<IValidator> validators) throws ContractException {
         super(sourceDomain, targetDomain, validators);
     }
-
+    
     @Override
-    public void createMetamodel() throws ContractException {
+    protected void createLocalMetamodel() throws ContractException {
         insertMetamodelClasses();
         insertMetamodelAttributes();
         insertMetamodelAssociations();

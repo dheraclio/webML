@@ -12,7 +12,15 @@ import br.uff.ic.mda.tclib.ContractException;
  */
 public interface TransformationRule {
 
+    /**
+     *
+     * @throws ContractException
+     */
     public void transform() throws ContractException;
 
+    /**
+     *
+     * @throws ContractException
+     */
     public void link() throws ContractException;
 }

@@ -78,8 +78,7 @@ public class UMLDomain extends Domain {
     @Override
     public void loadDataFromParser(IXMIParser parser) throws ContractException {
         Set<Entry<String, UMLClass>> classSet = parser.getClasses().entrySet();
-        Set<Entry<String, UMLAttribute>> attributeSet = parser.getAttributes().entrySet();
-
+        
         //Inserting classes
         for (Entry<String, UMLClass> classEntry : classSet) {
             this.insertClass(classEntry.getValue().getId(), classEntry.getValue().getName());
@@ -504,6 +503,13 @@ public class UMLDomain extends Domain {
         return result;
     }
 
+    /**
+     *
+     * @param id
+     * @param type
+     * @return
+     * @throws ContractException
+     */
     public boolean insertAttributeTypeLink(String id,String type) throws ContractException{
         if (type != null) {
             return ModelManager.instance().insertLink("Attribute", id, "types", "classifier", type, "Classifier");
@@ -511,6 +517,13 @@ public class UMLDomain extends Domain {
         return false;
     }
 
+    /**
+     *
+     * @param id
+     * @param classId
+     * @return
+     * @throws ContractException
+     */
     public boolean insertAttributeClassLink(String id, String classId) throws ContractException{
         if (classId != null) {
             return ModelManager.instance().insertLink("Attribute", id, "feature", "class", classId, "Class");
@@ -626,6 +639,12 @@ public class UMLDomain extends Domain {
         return result;
     }
 
+    /**
+     *
+     * @param objectName
+     * @param value
+     * @throws ContractException
+     */
     public void insertType(String objectName, String value) throws ContractException {
         final String className = "DataType";
         final String attrName = "name";
