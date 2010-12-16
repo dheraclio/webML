@@ -19,10 +19,11 @@ public class TransformerTest {
 
     private String umlBlog = TestHelper.getCurrentTargetTestPath() + "/transformer/blog.xmi";
     private String webmlBlog = TestHelper.getCurrentTargetTestPath() + "/transformer/blogwebml.xmi";
+    private String entitywebml = TestHelper.getCurrentTargetTestPath() + "/transformer/entitywebml.xmi";
     private int loopPause = 250;
 
     //UML para EJB original do Roberto
-    //@Test
+//    @Test
     public void testUMLtoEJBTransformation() throws Exception {
 
         UMLDomain umlDomain = new UMLDomain(new XMIParser(), umlBlog);
@@ -34,7 +35,7 @@ public class TransformerTest {
     }
 
     //UML para EJB, loop de chamada comum
-    //@Test
+//    @Test
     public void testUMLtoEJBTransformationLoop() throws Exception {
 
         for (int i = 0; i < 5; i++) {
@@ -42,9 +43,9 @@ public class TransformerTest {
             Thread.sleep(loopPause);
         }
     }
-    
+
     //UML para EJB usando chaintransformation
-    //@Test
+//    @Test
     public void testUMLtoEJBChainTransformation() throws Exception {
 
         UMLDomain umlDomain = new UMLDomain(new XMIParser(), umlBlog);
@@ -57,7 +58,7 @@ public class TransformerTest {
     }
 
     //UML para EJB, loop de chamada a chaintransformation
-    //@Test
+//    @Test
     public void testUMLtoEJBChainTransformationLoop() throws Exception {
 
         for (int i = 0; i < 5; i++) {
@@ -79,7 +80,7 @@ public class TransformerTest {
     }
 
     //WebML para UML, sem saída usando chaintransformation
-    //@Test
+//    @Test
     public void testWebMLtoUMLChainTransformation() throws Exception {
         WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), webmlBlog);
         UMLDomain umlDomain = new UMLDomain(new XMIParser(), umlBlog);
@@ -92,7 +93,8 @@ public class TransformerTest {
 
     @Test
     public void testWebMLToEJBChainTransformation() throws Exception {
-        WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), webmlBlog);
+        //WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), webmlBlog);
+        WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), entitywebml);
         UMLDomain umlDomain = new UMLDomain();
         EJBDomain ejbDomain = new EJBDomain();
         WebMLUMLDomain joinedDomain = new WebMLUMLDomain(webmlDomain, umlDomain);

@@ -61,11 +61,8 @@ Modificações no framework
 Resultados
 	A transformação em memória entre WebML e UML ocorre, mas de WebML para EJB apresenta erros.
 	
-Sugestões
-	Detectar tentativas de sobre-escrita de metaclasses
 	
 Planos futuros
-	Concluir transformação básica
-	Adicionar interfaces ao modelo de entrada
+	Concluir transformação básica	
 	Gerar interfaces através de richface e semelhantes.	
 	

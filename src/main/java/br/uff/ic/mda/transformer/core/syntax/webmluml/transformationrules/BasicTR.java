@@ -26,7 +26,7 @@ public abstract class BasicTR extends BasicModeler{
      * @param linkQuery
      * @param domain
      */
-    protected BasicTR(String transformQuery, String linkQuery,WebMLUMLDomain domain) {
+    protected void setup(String transformQuery, String linkQuery,WebMLUMLDomain domain) {
         setTransformQuery(transformQuery);
         setLinkQuery(linkQuery);
         setDomain(domain);
@@ -157,5 +157,12 @@ public abstract class BasicTR extends BasicModeler{
         return null;
     }
 
+    protected String getExactInstancesQuery(String instClass) {
+        return instClass + ".allInstances()->select(inst : " +
+               instClass + " | inst.oclIsTypeOf(" + instClass + "))";
+    }
 
+    protected String getAllInstancesQuery(String instClass) {
+        return instClass + ".allInstances()";
+    }
 }

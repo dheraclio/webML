@@ -20,7 +20,9 @@ public class RelationshipTR extends BasicTR implements TransformationRule {
      * @param domain
      */
     public RelationshipTR(WebMLUMLDomain domain) {
-        super(DataViewPackage.RELATIONSHIP + ".allInstances()", DataViewPackage.RELATIONSHIP + ".allInstances()", domain);
+        String transf = getExactInstancesQuery(DataViewPackage.RELATIONSHIP);
+        String link = getExactInstancesQuery(DataViewPackage.RELATIONSHIP);
+        setup(transf,link, domain);
     }
 
     /**

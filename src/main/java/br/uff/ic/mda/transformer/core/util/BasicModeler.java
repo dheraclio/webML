@@ -80,7 +80,7 @@ public abstract class BasicModeler {
      * @throws ContractException
      */
     protected String getFirstQueryResult(String id, String role) throws ContractException {
-        return getFirstQueryResult(id +"."+role);
+        return manager.query(id +"."+role);
     }
 
     /**

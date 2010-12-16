@@ -78,86 +78,36 @@ public class WebMLXMIParser {
         boolean result = true;
         final String attName = "name";
         String stereotypeName = getStereoTypeName(stereotypeId);
-        //String stereotypeObjId = JDHelper.getId(stereotypeName);
         result &= manager.insertObject(stereotypeName, id);
         result &= insertValue(stereotypeName, attName, id, name);
-
-        //System.out.println("Insert object: " + stereotypeName + " id: " + id);
         return result;
-    }
-
-    private boolean insertOperation(String id, String name, String visibility, String returnType, String classId) throws ContractException {
-        final String operation = CommonElementsPackage.UMLOPERATION;
-        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
-        final String className = CommonElementsPackage.UMLCLASS;
-
-        boolean result = insertObject(operation, id, name);
-        result &= insertValue(operation, "visibility", id, visibility);
-        result &= manager.insertLink(operation, id, "types", "classifier", returnType, classifier);
-        result &= manager.insertLink(operation, id, "feature", "class", classId, className);
-        return result;
-    }
-
-    private boolean insertParameter(String id, String name, String type, String operationId) throws ContractException {
-        final String parameter = CommonElementsPackage.UMLPARAMETER;
-        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
-        final String operation = CommonElementsPackage.UMLOPERATION;
-
-        boolean result = insertObject(parameter, id, name);
-
-        result &= manager.insertLink(parameter, id, "types", "classifier", type, classifier);
-        result &= manager.insertLink(parameter, id, "parameter", "operation", operationId, operation);
-
-        return result;
-    }
-
-    private boolean insertSet(String id, String name, String elementType) throws ContractException {
-        final String UMLSET = CommonElementsPackage.UMLUMLSET;
-        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
-
-        boolean result = insertObject(UMLSET, id, name);
-        result &= manager.insertLink(UMLSET, id, "setA", "elementType", elementType, classifier);
-        return result;
-    }
-
-    private boolean insertObject(String className, String classId, String objectName) throws ContractException {
-        boolean result = true;
-        final String attName = "name";
-        result &= manager.insertObject(className, classId);
-        result &= insertValue(className, attName, classId, objectName);
-        return result;
-    }
-
-    private boolean insertValue(String className, String attributeName, String objectName, String value) throws ContractException {
-        return manager.insertValue(className, attributeName, objectName, value == null ? "" : value);
-    }
-
-    private boolean insertValue(String className, String attributeName, String objectName, Boolean value) throws ContractException {
-        return manager.insertValue(className, attributeName, objectName, value == true ? "true" : "false");
     }
 
     private void insertAttributes() throws ContractException {
         Set<Entry<String, UMLClass>> classSet = parser.getClasses().entrySet();
         for (Entry<String, UMLClass> classEntry : classSet) {
-            List<UMLAttribute> attributeArray = classEntry.getValue().getAttributes();
-            for (UMLAttribute attribute : attributeArray) {
+            for (UMLAttribute attribute : classEntry.getValue().getAttributes()) {
                 String attributeTypeName = null;
                 String attributeTypeId = null;
                 if (parser.getDataTypes().containsKey(attribute.getType())) {
                     attributeTypeName = ((UMLElement) parser.getDataTypes().get(attribute.getType())).getName();
                     attributeTypeId = queryType(attributeTypeName);
                     if (attributeTypeId == null || "null".equals(attributeTypeId)) {
-                        throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class " + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
+                        throw new ContractException(attribute.getName() + "(" + attribute.getType()
+                                + ") type not found in class " + classEntry.getValue().getName()
+                                + " " + classEntry.getValue().getId());
                     }
                 } else {
-                    throw new ContractException("Attribute (" + attribute.getType() + ") type not found in class " + classEntry.getValue().getName() + " " + classEntry.getValue().getId());
+                    throw new ContractException(attribute.getName() + "(" + attribute.getType()
+                            + ") type not found in class " + classEntry.getValue().getName()
+                            + " " + classEntry.getValue().getId());
                 }
                 this.insertAttribute(attribute.getId(), attribute.getName(), attribute.getVisibility(), attributeTypeId, classEntry.getValue());
             }
         }
     }
 
-    private boolean insertAttribute(String attrid, String name, String visibility, String type, UMLClass classInstance) throws ContractException {
+    private boolean insertAttribute(String attrId, String name, String visibility, String type, UMLClass classInstance) throws ContractException {
         if (!classInstance.hasStereotype()) {
             throw new ContractException("Class not stereotyped:" + classInstance.getName());
         }
@@ -167,12 +117,20 @@ public class WebMLXMIParser {
         String steretypeName = getStereoTypeName(classInstance.getStereotypeRefId());
 
         boolean result = true;
-        result &= manager.insertObject(attribute, attrid);
-        result &= insertValue(attribute, "name", attrid, name);
-        result &= insertValue(attribute, "visibility", attrid, visibility);
-        result &= manager.insertLink(attribute, attrid, "types", "classifier", type, classifer);
-        result &= manager.insertLink(attribute, attrid, "feature", "class", classInstance.getId(), steretypeName);
+        result &= manager.insertObject(attribute, attrId);
+        result &= insertValue(attribute, "name", attrId, name);
+        result &= insertValue(attribute, "visibility", attrId, visibility);
+        result &= manager.insertLink(attribute, attrId, "types", "classifier", type, classifer);
+        result &= manager.insertLink(attribute, attrId, "feature", "class", classInstance.getId(), steretypeName);
 
+        return result;
+    }
+
+    private boolean insertObject(String className, String classId, String objectName) throws ContractException {
+        boolean result = true;
+        final String attName = "name";
+        result &= manager.insertObject(className, classId);
+        result &= insertValue(className, attName, classId, objectName);
         return result;
     }
 
@@ -266,16 +224,49 @@ public class WebMLXMIParser {
 
             //Parameters
             for (UMLElement parameter : operation.getParameters()) {
-                String parameterType = getParameterType(operation,parameter);
+                String parameterType = getParameterType(operation, parameter);
                 this.insertParameter(parameter.getId(), parameter.getName(), parameterType, operation.getId());
             }
         }
     }
 
+    private boolean insertOperation(String id, String name, String visibility, String returnType, String classId) throws ContractException {
+        final String operation = CommonElementsPackage.UMLOPERATION;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+        final String className = CommonElementsPackage.UMLCLASS;
+
+        boolean result = insertObject(operation, id, name);
+        result &= insertValue(operation, "visibility", id, visibility);
+        result &= manager.insertLink(operation, id, "types", "classifier", returnType, classifier);
+        result &= manager.insertLink(operation, id, "feature", "class", classId, className);
+        return result;
+    }
+
+    private boolean insertParameter(String id, String name, String type, String operationId) throws ContractException {
+        final String parameter = CommonElementsPackage.UMLPARAMETER;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+        final String operation = CommonElementsPackage.UMLOPERATION;
+
+        boolean result = insertObject(parameter, id, name);
+
+        result &= manager.insertLink(parameter, id, "types", "classifier", type, classifier);
+        result &= manager.insertLink(parameter, id, "parameter", "operation", operationId, operation);
+
+        return result;
+    }
+
+    private boolean insertValue(String className, String attributeName, String objectName, String value) throws ContractException {
+        return manager.insertValue(className, attributeName, objectName, value == null ? "" : value);
+    }
+
+    private boolean insertValue(String className, String attributeName, String objectName, Boolean value) throws ContractException {
+        return manager.insertValue(className, attributeName, objectName, value == true ? "true" : "false");
+    }
+
     private String getOperationType(UMLElement element, String typeId) throws ContractException {
         if ("List".equals(element.getName())) {
             String setId = "ID" + System.nanoTime();
-            this.insertSet(setId, element.getName(), "UMLVoid");
+            this.insertSet(setId, element.getName(), CommonElementsPackage.JAVAVOID);
             return setId;
         } else {
             String operationType = queryType(element.getName());
@@ -284,6 +275,15 @@ public class WebMLXMIParser {
             }
             return operationType;
         }
+    }
+
+    private boolean insertSet(String id, String name, String elementType) throws ContractException {
+        final String umlSet = CommonElementsPackage.UMLUMLSET;
+        final String classifier = CommonElementsPackage.UMLCLASSIFIER;
+
+        boolean result = insertObject(umlSet, id, name);
+        result &= manager.insertLink(umlSet, id, "setA", "elementType", elementType, classifier);
+        return result;
     }
 
     private String queryType(String attributeTypeName) throws ContractException {
@@ -295,7 +295,7 @@ public class WebMLXMIParser {
             System.out.println(e.getMessage());
             return null;
         }
-        
+
     }
 
     private String processID(String oldID) {
@@ -310,7 +310,7 @@ public class WebMLXMIParser {
         return WebMLBasicPackage.PREFIX + name;
     }
 
-    private String getParameterType(UMLOperation operation,UMLElement parameter) throws ContractException {
+    private String getParameterType(UMLOperation operation, UMLElement parameter) throws ContractException {
         try {
             String parameterType = operation.getParameterType(parameter.getId());
             UMLElement pElement = (UMLElement) parser.getDataTypes().get(processID(parameterType));
@@ -318,7 +318,7 @@ public class WebMLXMIParser {
                 // Eh um DataType
                 if ("List".equals(pElement.getName())) {
                     String setId = "ID" + System.nanoTime();
-                    this.insertSet(setId, pElement.getName(), "UMLVoid");
+                    this.insertSet(setId, pElement.getName(), CommonElementsPackage.JAVAVOID);
                     parameterType = setId;
                 } else {
                     parameterType = queryType(pElement.getName());

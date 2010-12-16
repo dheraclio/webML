@@ -51,6 +51,10 @@ public class ServiceViewPackage extends WebMLBasicPackage {
         insertMetaModelAttributes();        
     }
 
+    /**
+     *
+     * @throws ContractException
+     */
     private static void insertMetaModelAttributes() throws ContractException{
 
         manager.insertAttribute(SERVICEVIEW, SERVICEVIEW_SECURE, TYPE_BOOLEAN);

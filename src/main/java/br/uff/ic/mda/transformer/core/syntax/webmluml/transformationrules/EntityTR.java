@@ -22,7 +22,9 @@ public class EntityTR extends BasicTR implements TransformationRule {
      * @param domain
      */
     public EntityTR(WebMLUMLDomain domain) {
-        super(DataViewPackage.ENTITY + ".allInstances()", WebMLUMLMetaModeler.TR_ENTITY2CLASS + ".allInstances()", domain);
+        String transf = getExactInstancesQuery(DataViewPackage.ENTITY);
+        String link = getExactInstancesQuery(WebMLUMLMetaModeler.TR_ENTITY2CLASS);
+        setup(transf,link, domain);
     }
 
     /**

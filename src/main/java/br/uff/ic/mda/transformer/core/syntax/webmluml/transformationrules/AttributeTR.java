@@ -8,7 +8,6 @@ import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.transformer.WebMLUMLDomain;
 import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
 import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
 import br.uff.ic.mda.transformer.core.syntax.webmluml.WebMLUMLMetaModeler;
 import br.uff.ic.mda.transformer.core.util.JDHelper;
 
@@ -23,7 +22,9 @@ public class AttributeTR extends BasicTR implements TransformationRule {
      * @param domain
      */
     public AttributeTR(WebMLUMLDomain domain) {
-        super(CommonElementsPackage.UMLATTRIBUTE + ".allInstances()", WebMLUMLMetaModeler.TR_ATTRIBUTE2ATTRIBUTE + ".allInstances()", domain);
+        String transf = getAllInstancesQuery(CommonElementsPackage.UMLATTRIBUTE);
+        String link = getExactInstancesQuery(WebMLUMLMetaModeler.TR_ATTRIBUTE2ATTRIBUTE);
+        setup(transf,link, domain);
     }
 
     /**
@@ -36,8 +37,13 @@ public class AttributeTR extends BasicTR implements TransformationRule {
     protected void doTransformation(String id, String name) throws ContractException {
         String umlName = name;
         String umlId = JDHelper.getNewId();
-        String umlVisibility = manager.query(id + ".visibility").replace("'", "");
-        getDomain().getTargetDomain().insertAttribute(umlId, umlName,umlVisibility,null,null);
+        String umlVisibility = getFirstQueryResult(id, "visibility");
+        String webMLClassId = getFirstQueryResult(id, "class");
+        String umlClassId = findUMLClassFromWebMLId(webMLClassId);
+        String webMLType = getFirstQueryResult(id, "classifier");
+        String umlTypeId = findUMLTypeIdFromWebMLTypeId(webMLType);
+
+        getDomain().getTargetDomain().insertAttribute(umlId, umlName,umlVisibility,umlTypeId,umlClassId);
         insertWebMLAttributeToUMLAttribute(id, umlId);
     }
 
@@ -73,4 +79,6 @@ public class AttributeTR extends BasicTR implements TransformationRule {
         result &= manager.insertLink(CommonElementsPackage.UMLATTRIBUTE, webmlId, WebMLUMLMetaModeler.ROLE_WEBML, WebMLUMLMetaModeler.ROLE_TRANSFORM, id, WebMLUMLMetaModeler.TR_ATTRIBUTE2ATTRIBUTE);
         return result;
     }
+
+    
 }

@@ -4,6 +4,7 @@ import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.IValidator;
 import br.uff.ic.mda.tclib.JoinedDomain;
 import br.uff.ic.mda.tclib.ModelManager;
+import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,6 +15,22 @@ import java.util.Collection;
  */
 public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
 
+    public static final String UMLASSOCIATIONCLASSTOEJBDATACLASS = "UMLAssociationClassToEJBDataClass";
+    public static final String UMLASSOCIATIONCLASSTOEJBKEYCLASS = "UMLAssociationClassToEJBKeyClass";
+    public static final String UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE = "UMLAssociationEndEmEJBAssociationusingRule10";
+    public static final String UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11 = "UMLAssociationEndEmEJBAssociationusingRule11";
+    public static final String UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8 = "UMLAssociationEndToEJBDataEndusingRule8";
+    public static final String UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9 = "UMLAssociationEndToEJBDataEndusingRule9";
+    public static final String UMLASSOCIATIONTOEJBDATAASSOCIATION = "UMLAssociationToEJBDataAssociation";
+    public static final String UMLATTRIBUTETOEJBATTRIBUTE = "UMLAttributeToEJBAttribute";
+    public static final String UMLCLASSTOEJBDATACLASS = "UMLClassToEJBDataClass";
+    public static final String UMLCLASSTOEJBENTITYCOMPONENT = "UMLClassToEJBEntityComponent";
+    public static final String UMLCLASSTOEJBKEYCLASS = "UMLClassToEJBKeyClass";
+    public static final String UMLDATATYPETOEJBDATATYPE = "UMLDataTypeToEJBDataType";
+    public static final String UMLOPERATIONTOBUSINESSMETHOD = "UMLOperationToBusinessMethod";
+    public static final String UMLPARAMETERTOEJBPARAMETER = "UMLParameterToEJBParameter";
+    public static final String UMLSETTOEJBSET = "UMLSetToEJBSet";
+
     /**
      *
      * @param sourceDomain
@@ -23,11 +40,8 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     public UMLEJBDomain(UMLDomain sourceDomain, EJBDomain targetDomain) throws ContractException {
         super(sourceDomain, targetDomain,
                 new ArrayList<IValidator>(
-                    Arrays.asList(
-                        new UMLEJBInvariantValidator()
-                    )
-                )
-             );
+                Arrays.asList(
+                new UMLEJBInvariantValidator())));
     }
 
     /**
@@ -40,7 +54,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     public UMLEJBDomain(UMLDomain sourceDomain, EJBDomain targetDomain, Collection<IValidator> validators) throws ContractException {
         super(sourceDomain, targetDomain, validators);
     }
-    
+
     @Override
     protected void createLocalMetamodel() throws ContractException {
         insertMetamodelClasses();
@@ -60,21 +74,21 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     public void insertMetamodelClasses() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
-        manager.insertClass("UMLDataTypeToEJBDataType");                      // Regra Minha
-        manager.insertClass("UMLClassToEJBKeyClass");                         // Regra 1
-        manager.insertClass("UMLAssociationClassToEJBKeyClass");              // Regra 2
-        manager.insertClass("UMLOperationToBusinessMethod");                  // Regra 12
-        manager.insertClass("UMLParameterToEJBParameter");                    // Regra 13
-        manager.insertClass("UMLAttributeToEJBAttribute");                    // Regra 7
-        manager.insertClass("UMLClassToEJBDataClass");                        // Regra 4
-        manager.insertClass("UMLAssociationToEJBDataAssociation");            // Regra 5
-        manager.insertClass("UMLAssociationClassToEJBDataClass");             // Regra 6
-        manager.insertClass("UMLAssociationEndToEJBDataEndusingRule8");       // Regra 8
-        manager.insertClass("UMLAssociationEndToEJBDataEndusingRule9");       // Regra 9
-        manager.insertClass("UMLAssociationEndEmEJBAssociationusingRule10");  // Regra 10
-        manager.insertClass("UMLAssociationEndEmEJBAssociationusingRule11");  // Regra 11
-        manager.insertClass("UMLClassToEJBEntityComponent");                  // Regra 3
-        manager.insertClass("UMLSetToEJBSet");                          // Minha regra
+        manager.insertClass(UMLDATATYPETOEJBDATATYPE);                      // Regra Minha
+        manager.insertClass(UMLCLASSTOEJBKEYCLASS);                         // Regra 1
+        manager.insertClass(UMLASSOCIATIONCLASSTOEJBKEYCLASS);              // Regra 2
+        manager.insertClass(UMLOPERATIONTOBUSINESSMETHOD);                  // Regra 12
+        manager.insertClass(UMLPARAMETERTOEJBPARAMETER);                    // Regra 13
+        manager.insertClass(UMLATTRIBUTETOEJBATTRIBUTE);                    // Regra 7
+        manager.insertClass(UMLCLASSTOEJBDATACLASS);                        // Regra 4
+        manager.insertClass(UMLASSOCIATIONTOEJBDATAASSOCIATION);            // Regra 5
+        manager.insertClass(UMLASSOCIATIONCLASSTOEJBDATACLASS);             // Regra 6
+        manager.insertClass(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8);       // Regra 8
+        manager.insertClass(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9);       // Regra 9
+        manager.insertClass(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);  // Regra 10
+        manager.insertClass(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11);  // Regra 11
+        manager.insertClass(UMLCLASSTOEJBENTITYCOMPONENT);                  // Regra 3
+        manager.insertClass(UMLSETTOEJBSET);                          // Minha regra
     }
 
     /**
@@ -84,21 +98,21 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     public void insertMetamodelAttributes() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
-        manager.insertAttribute("UMLDataTypeToEJBDataType", "name", "String");
-        manager.insertAttribute("UMLClassToEJBKeyClass", "name", "String");
-        manager.insertAttribute("UMLAssociationClassToEJBKeyClass", "name", "String");
-        manager.insertAttribute("UMLOperationToBusinessMethod", "name", "String");
-        manager.insertAttribute("UMLParameterToEJBParameter", "name", "String");
-        manager.insertAttribute("UMLAttributeToEJBAttribute", "name", "String");
-        manager.insertAttribute("UMLClassToEJBDataClass", "name", "String");
-        manager.insertAttribute("UMLAssociationToEJBDataAssociation", "name", "String");
-        manager.insertAttribute("UMLAssociationEndToEJBDataEndusingRule8", "name", "String");
-        manager.insertAttribute("UMLAssociationEndToEJBDataEndusingRule9", "name", "String");
-        manager.insertAttribute("UMLAssociationEndEmEJBAssociationusingRule10", "name", "String");
-        manager.insertAttribute("UMLAssociationEndEmEJBAssociationusingRule11", "name", "String");
-        manager.insertAttribute("UMLClassToEJBEntityComponent", "name", "String");
-        manager.insertAttribute("UMLAssociationClassToEJBDataClass", "name", "String");
-        manager.insertAttribute("UMLSetToEJBSet", "name", "String");
+        manager.insertAttribute(UMLDATATYPETOEJBDATATYPE, "name", "String");
+        manager.insertAttribute(UMLCLASSTOEJBKEYCLASS, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONCLASSTOEJBKEYCLASS, "name", "String");
+        manager.insertAttribute(UMLOPERATIONTOBUSINESSMETHOD, "name", "String");
+        manager.insertAttribute(UMLPARAMETERTOEJBPARAMETER, "name", "String");
+        manager.insertAttribute(UMLATTRIBUTETOEJBATTRIBUTE, "name", "String");
+        manager.insertAttribute(UMLCLASSTOEJBDATACLASS, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONTOEJBDATAASSOCIATION, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11, "name", "String");
+        manager.insertAttribute(UMLCLASSTOEJBENTITYCOMPONENT, "name", "String");
+        manager.insertAttribute(UMLASSOCIATIONCLASSTOEJBDATACLASS, "name", "String");
+        manager.insertAttribute(UMLSETTOEJBSET, "name", "String");
     }
 
     /**
@@ -109,71 +123,71 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         ModelManager manager = ModelManager.instance();
 
         // Associacoes UMLDataTypeToEJBDataType
-        manager.insertAssociation("DataType", "dataType", "1", "0..1", "transformerToEjbDataType", "UMLDataTypeToEJBDataType");
-        manager.insertAssociation("EJBDataType", "ejbDataType", "1", "0..1", "transformerToEjbDataType", "UMLDataTypeToEJBDataType");
+        manager.insertAssociation(UMLMetaModeler.DATATYPE, "dataType", "1", "0..1", "transformerToEjbDataType", UMLDATATYPETOEJBDATATYPE);
+        manager.insertAssociation("EJBDataType", "ejbDataType", "1", "0..1", "transformerToEjbDataType", UMLDATATYPETOEJBDATATYPE);
 
         // Associacoes UMLClassToEJBKeyClass
-        manager.insertAssociation("Class", "class", "1", "0..1", "transformerToClass", "UMLClassToEJBKeyClass");
-        manager.insertAssociation("EJBAttribute", "id", "1", "0..1", "transformerToClass", "UMLClassToEJBKeyClass");
-        manager.insertAssociation("EJBKeyClass", "keyClass", "1", "0..1", "transformerToClass", "UMLClassToEJBKeyClass");
+        manager.insertAssociation(UMLMetaModeler.CLASS, "class", "1", "0..1", "transformerToClass", UMLCLASSTOEJBKEYCLASS);
+        manager.insertAssociation("EJBAttribute", "id", "1", "0..1", "transformerToClass", UMLCLASSTOEJBKEYCLASS);
+        manager.insertAssociation("EJBKeyClass", "keyClass", "1", "0..1", "transformerToClass", UMLCLASSTOEJBKEYCLASS);
 
         // Associacoes UMLAssociationClassToEJBKeyClass
-        manager.insertAssociation("AssociationClass", "associationClass", "1", "0..1", "transformerToAssociationClass", "UMLAssociationClassToEJBKeyClass");
-        manager.insertAssociation("EJBAttribute", "id", "2", "0..1", "transformerToAssociationClass", "UMLAssociationClassToEJBKeyClass");
-        manager.insertAssociation("EJBKeyClass", "keyClass", "1", "0..1", "transformerToAssociationClass", "UMLAssociationClassToEJBKeyClass");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONCLASS, "associationClass", "1", "0..1", "transformerToAssociationClass", UMLASSOCIATIONCLASSTOEJBKEYCLASS);
+        manager.insertAssociation("EJBAttribute", "id", "2", "0..1", "transformerToAssociationClass", UMLASSOCIATIONCLASSTOEJBKEYCLASS);
+        manager.insertAssociation("EJBKeyClass", "keyClass", "1", "0..1", "transformerToAssociationClass", UMLASSOCIATIONCLASSTOEJBKEYCLASS);
 
         // Associacoes UMLOperationToBusinessMethod
-        manager.insertAssociation("Operation", "operation", "1", "0..1", "transformerToBusinessMethod", "UMLOperationToBusinessMethod");
-        manager.insertAssociation("BusinessMethod", "businessMethod", "1", "0..1", "transformerToBusinessMethod", "UMLOperationToBusinessMethod");
+        manager.insertAssociation("Operation", "operation", "1", "0..1", "transformerToBusinessMethod", UMLOPERATIONTOBUSINESSMETHOD);
+        manager.insertAssociation("BusinessMethod", "businessMethod", "1", "0..1", "transformerToBusinessMethod", UMLOPERATIONTOBUSINESSMETHOD);
 
         // Associacoes UMLParameterToEJBParameter
-        manager.insertAssociation("Parameter", "parameter", "1", "0..1", "transformerToEjbParameter", "UMLParameterToEJBParameter");
-        manager.insertAssociation("EJBParameter", "ejbParameter", "1", "0..1", "transformerToEjbParameter", "UMLParameterToEJBParameter");
+        manager.insertAssociation("Parameter", "parameter", "1", "0..1", "transformerToEjbParameter", UMLPARAMETERTOEJBPARAMETER);
+        manager.insertAssociation("EJBParameter", "ejbParameter", "1", "0..1", "transformerToEjbParameter", UMLPARAMETERTOEJBPARAMETER);
 
         // Associacoes UMLAttributeToEJBAttribute
-        manager.insertAssociation("Attribute", "attribute", "1", "0..1", "transformerToEjbAttribute", "UMLAttributeToEJBAttribute");
-        manager.insertAssociation("EJBAttribute", "ejbAttribute", "1", "0..1", "transformerToEjbAttribute", "UMLAttributeToEJBAttribute");
+        manager.insertAssociation(UMLMetaModeler.ATTRIBUTE, "attribute", "1", "0..1", "transformerToEjbAttribute", UMLATTRIBUTETOEJBATTRIBUTE);
+        manager.insertAssociation("EJBAttribute", "ejbAttribute", "1", "0..1", "transformerToEjbAttribute", UMLATTRIBUTETOEJBATTRIBUTE);
 
         // Associacoes UMLClassToEJBDataClass
-        manager.insertAssociation("Class", "class", "1", "0..1", "transformerToEjbDataClass", "UMLClassToEJBDataClass");
-        manager.insertAssociation("EJBDataClass", "ejbDataClass", "1", "0..1", "transformerToEjbDataClass", "UMLClassToEJBDataClass");
+        manager.insertAssociation(UMLMetaModeler.CLASS, "class", "1", "0..1", "transformerToEjbDataClass", UMLCLASSTOEJBDATACLASS);
+        manager.insertAssociation("EJBDataClass", "ejbDataClass", "1", "0..1", "transformerToEjbDataClass", UMLCLASSTOEJBDATACLASS);
 
         // Associacoes UMLAssociationToEJBDataAssociation
-        manager.insertAssociation("Association", "association", "1", "0..1", "transformerToEjbDataAssociationusingRule5", "UMLAssociationToEJBDataAssociation");
-        manager.insertAssociation("EJBDataAssociation", "ejbDataAssociation", "1", "0..1", "transformerToEjbDataAssociationusingRule5", "UMLAssociationToEJBDataAssociation");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATION, "association", "1", "0..1", "transformerToEjbDataAssociationusingRule5", UMLASSOCIATIONTOEJBDATAASSOCIATION);
+        manager.insertAssociation("EJBDataAssociation", "ejbDataAssociation", "1", "0..1", "transformerToEjbDataAssociationusingRule5", UMLASSOCIATIONTOEJBDATAASSOCIATION);
 
         // Associacoes UMLAssociationClassToEJBDataClass
-        manager.insertAssociation("AssociationClass", "associationClass", "1", "0..1", "transformerToEjbDataClassfromAssociationClass", "UMLAssociationClassToEJBDataClass");
-        manager.insertAssociation("EJBDataClass", "ejbDataClass", "1", "0..1", "transformerToEjbDataClassfromAssociationClass", "UMLAssociationClassToEJBDataClass");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONCLASS, "associationClass", "1", "0..1", "transformerToEjbDataClassfromAssociationClass", UMLASSOCIATIONCLASSTOEJBDATACLASS);
+        manager.insertAssociation("EJBDataClass", "ejbDataClass", "1", "0..1", "transformerToEjbDataClassfromAssociationClass", UMLASSOCIATIONCLASSTOEJBDATACLASS);
 
         // Associacoes UMLAssociationEndToEJBDataEndusingRule8
-        manager.insertAssociation("AssociationEnd", "associationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule8", "UMLAssociationEndToEJBDataEndusingRule8");
-        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule8", "UMLAssociationEndToEJBDataEndusingRule8");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONEND, "associationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule8", UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8);
+        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule8", UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8);
 
         // Associacoes UMLAssociationEndToEJBDataEndusingRule9
-        manager.insertAssociation("AssociationEnd", "associationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule9", "UMLAssociationEndToEJBDataEndusingRule9");
-        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule9", "UMLAssociationEndToEJBDataEndusingRule9");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONEND, "associationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule9", UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9);
+        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd", "1", "0..1", "transformerToEjbAssociationEndusingRule9", UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9);
 
         // Associacoes UMLAssociationEndEmEJBAssociationusingRule10
-        manager.insertAssociation("AssociationEnd", "associationEnd", "1", "0..1", "transformerToEjbDataAssociationusingRule10", "UMLAssociationEndEmEJBAssociationusingRule10");
-        manager.insertAssociation("EJBDataAssociation", "ejbDataAssociation", "1", "0..1", "transformerToEjbDataAssociationusingRule10", "UMLAssociationEndEmEJBAssociationusingRule10");
-        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd1", "1", "0..1", "transformerToEjbDataAssociationusingRule10_1", "UMLAssociationEndEmEJBAssociationusingRule10");
-        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd2", "1", "0..1", "transformerToEjbDataAssociationusingRule10_2", "UMLAssociationEndEmEJBAssociationusingRule10");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONEND, "associationEnd", "1", "0..1", "transformerToEjbDataAssociationusingRule10", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        manager.insertAssociation("EJBDataAssociation", "ejbDataAssociation", "1", "0..1", "transformerToEjbDataAssociationusingRule10", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd1", "1", "0..1", "transformerToEjbDataAssociationusingRule10_1", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd2", "1", "0..1", "transformerToEjbDataAssociationusingRule10_2", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
 
         // Associacoes UMLAssociationEndEmEJBAssociationusingRule11
-        manager.insertAssociation("AssociationEnd", "associationEnd", "1", "0..1", "transformerToEjbDataAssociationusingRule11", "UMLAssociationEndEmEJBAssociationusingRule11");
-        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd2", "1", "0..1", "transformerToEjbDataAssociationusingRule11", "UMLAssociationEndEmEJBAssociationusingRule11");
+        manager.insertAssociation(UMLMetaModeler.ASSOCIATIONEND, "associationEnd", "1", "0..1", "transformerToEjbDataAssociationusingRule11", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11);
+        manager.insertAssociation("EJBAssociationEnd", "ejbAssociationEnd2", "1", "0..1", "transformerToEjbDataAssociationusingRule11", UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11);
 
         // Associacoes UMLClassToEJBEntityComponent
-        manager.insertAssociation("Class", "class", "1", "0..1", "transformerToEntityComponent", "UMLClassToEJBEntityComponent");
-        manager.insertAssociation("EJBEntityComponent", "entityComponent", "1", "0..1", "transformerToEntityComponent", "UMLClassToEJBEntityComponent");
-        manager.insertAssociation("EJBDataClass", "dataClass", "1", "0..1", "transformerToEntityComponent", "UMLClassToEJBEntityComponent");
-        manager.insertAssociation("EJBDataSchema", "dataSchema", "1", "0..1", "transformerToEntityComponent", "UMLClassToEJBEntityComponent");
-        manager.insertAssociation("EJBServingAttribute", "servingAttribute", "1", "0..1", "transformerToEntityComponent", "UMLClassToEJBEntityComponent");
+        manager.insertAssociation(UMLMetaModeler.CLASS, "class", "1", "0..1", "transformerToEntityComponent", UMLCLASSTOEJBENTITYCOMPONENT);
+        manager.insertAssociation("EJBEntityComponent", "entityComponent", "1", "0..1", "transformerToEntityComponent", UMLCLASSTOEJBENTITYCOMPONENT);
+        manager.insertAssociation("EJBDataClass", "dataClass", "1", "0..1", "transformerToEntityComponent", UMLCLASSTOEJBENTITYCOMPONENT);
+        manager.insertAssociation("EJBDataSchema", "dataSchema", "1", "0..1", "transformerToEntityComponent", UMLCLASSTOEJBENTITYCOMPONENT);
+        manager.insertAssociation("EJBServingAttribute", "servingAttribute", "1", "0..1", "transformerToEntityComponent", UMLCLASSTOEJBENTITYCOMPONENT);
 
         // Associacoes UMLSetToEJBSet
-        manager.insertAssociation("UMLSet", "umlSet", "1", "0..1", "transformerToSet", "UMLSetToEJBSet");
-        manager.insertAssociation("EJBSet", "ejbSet", "1", "0..1", "transformerToSet", "UMLSetToEJBSet");
+        manager.insertAssociation("UMLSet", "umlSet", "1", "0..1", "transformerToSet", UMLSETTOEJBSET);
+        manager.insertAssociation("EJBSet", "ejbSet", "1", "0..1", "transformerToSet", UMLSETTOEJBSET);
     }
 
     /**
@@ -200,10 +214,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlDataTypeId + "To" + ejbDataTypeId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLDataTypeToEJBDataType", id);
-        result &= manager.insertValue("UMLDataTypeToEJBDataType", "name", id, name);
-        result &= manager.insertLink("DataType", umlDataTypeId, "dataType", "transformerToEjbDataType", id, "UMLDataTypeToEJBDataType");
-        result &= manager.insertLink("EJBDataType", ejbDataTypeId, "ejbDataType", "transformerToEjbDataType", id, "UMLDataTypeToEJBDataType");
+        result &= manager.insertObject(UMLDATATYPETOEJBDATATYPE, id);
+        result &= manager.insertValue(UMLDATATYPETOEJBDATATYPE, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.DATATYPE, umlDataTypeId, "dataType", "transformerToEjbDataType", id, UMLDATATYPETOEJBDATATYPE);
+        result &= manager.insertLink("EJBDataType", ejbDataTypeId, "ejbDataType", "transformerToEjbDataType", id, UMLDATATYPETOEJBDATATYPE);
 
         return result;
     }
@@ -223,11 +237,11 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlClassId + "To" + ejbKeyClassId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLClassToEJBKeyClass", id);
-        result &= manager.insertValue("UMLClassToEJBKeyClass", "name", id, name);
-        result &= manager.insertLink("Class", umlClassId, "class", "transformerToClass", id, "UMLClassToEJBKeyClass");
-        result &= manager.insertLink("EJBKeyClass", ejbKeyClassId, "keyClass", "transformerToClass", id, "UMLClassToEJBKeyClass");
-        result &= manager.insertLink("EJBAttribute", ejbAttributeId, "id", "transformerToClass", id, "UMLClassToEJBKeyClass");
+        result &= manager.insertObject(UMLCLASSTOEJBKEYCLASS, id);
+        result &= manager.insertValue(UMLCLASSTOEJBKEYCLASS, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.CLASS, umlClassId, "class", "transformerToClass", id, UMLCLASSTOEJBKEYCLASS);
+        result &= manager.insertLink("EJBKeyClass", ejbKeyClassId, "keyClass", "transformerToClass", id, UMLCLASSTOEJBKEYCLASS);
+        result &= manager.insertLink("EJBAttribute", ejbAttributeId, "id", "transformerToClass", id, UMLCLASSTOEJBKEYCLASS);
 
         return result;
     }
@@ -248,12 +262,12 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlClassId + "To" + ejbKeyClassId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationClassToEJBKeyClass", id);
-        result &= manager.insertValue("UMLAssociationClassToEJBKeyClass", "name", id, name);
-        result &= manager.insertLink("AssociationClass", umlClassId, "associationClass", "transformerToAssociationClass", id, "UMLAssociationClassToEJBKeyClass");
-        result &= manager.insertLink("EJBKeyClass", ejbKeyClassId, "keyClass", "transformerToAssociationClass", id, "UMLAssociationClassToEJBKeyClass");
-        result &= manager.insertLink("EJBAttribute", ejbAttribute1Id, "id", "transformerToAssociationClass", id, "UMLAssociationClassToEJBKeyClass");
-        result &= manager.insertLink("EJBAttribute", ejbAttribute2Id, "id", "transformerToAssociationClass", id, "UMLAssociationClassToEJBKeyClass");
+        result &= manager.insertObject(UMLASSOCIATIONCLASSTOEJBKEYCLASS, id);
+        result &= manager.insertValue(UMLASSOCIATIONCLASSTOEJBKEYCLASS, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONCLASS, umlClassId, "associationClass", "transformerToAssociationClass", id, UMLASSOCIATIONCLASSTOEJBKEYCLASS);
+        result &= manager.insertLink("EJBKeyClass", ejbKeyClassId, "keyClass", "transformerToAssociationClass", id, UMLASSOCIATIONCLASSTOEJBKEYCLASS);
+        result &= manager.insertLink("EJBAttribute", ejbAttribute1Id, "id", "transformerToAssociationClass", id, UMLASSOCIATIONCLASSTOEJBKEYCLASS);
+        result &= manager.insertLink("EJBAttribute", ejbAttribute2Id, "id", "transformerToAssociationClass", id, UMLASSOCIATIONCLASSTOEJBKEYCLASS);
 
         return result;
     }
@@ -272,10 +286,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlParameterId + "To" + ejbParameterId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLParameterToEJBParameter", id);
-        result &= manager.insertValue("UMLParameterToEJBParameter", "name", id, name);
-        result &= manager.insertLink("Parameter", umlParameterId, "parameter", "transformerToEjbParameter", id, "UMLParameterToEJBParameter");
-        result &= manager.insertLink("EJBParameter", ejbParameterId, "ejbParameter", "transformerToEjbParameter", id, "UMLParameterToEJBParameter");
+        result &= manager.insertObject(UMLPARAMETERTOEJBPARAMETER, id);
+        result &= manager.insertValue(UMLPARAMETERTOEJBPARAMETER, "name", id, name);
+        result &= manager.insertLink("Parameter", umlParameterId, "parameter", "transformerToEjbParameter", id, UMLPARAMETERTOEJBPARAMETER);
+        result &= manager.insertLink("EJBParameter", ejbParameterId, "ejbParameter", "transformerToEjbParameter", id, UMLPARAMETERTOEJBPARAMETER);
 
         return result;
     }
@@ -294,10 +308,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlOperationId + "To" + businessMethodId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLOperationToBusinessMethod", id);
-        result &= manager.insertValue("UMLOperationToBusinessMethod", "name", id, name);
-        result &= manager.insertLink("Operation", umlOperationId, "operation", "transformerToBusinessMethod", id, "UMLOperationToBusinessMethod");
-        result &= manager.insertLink("BusinessMethod", businessMethodId, "businessMethod", "transformerToBusinessMethod", id, "UMLOperationToBusinessMethod");
+        result &= manager.insertObject(UMLOPERATIONTOBUSINESSMETHOD, id);
+        result &= manager.insertValue(UMLOPERATIONTOBUSINESSMETHOD, "name", id, name);
+        result &= manager.insertLink("Operation", umlOperationId, "operation", "transformerToBusinessMethod", id, UMLOPERATIONTOBUSINESSMETHOD);
+        result &= manager.insertLink("BusinessMethod", businessMethodId, "businessMethod", "transformerToBusinessMethod", id, UMLOPERATIONTOBUSINESSMETHOD);
 
         return result;
     }
@@ -316,10 +330,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAttributeId + "To" + ejbAttributeId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAttributeToEJBAttribute", id);
-        result &= manager.insertValue("UMLAttributeToEJBAttribute", "name", id, name);
-        result &= manager.insertLink("Attribute", umlAttributeId, "attribute", "transformerToEjbAttribute", id, "UMLAttributeToEJBAttribute");
-        result &= manager.insertLink("EJBAttribute", ejbAttributeId, "ejbAttribute", "transformerToEjbAttribute", id, "UMLAttributeToEJBAttribute");
+        result &= manager.insertObject(UMLATTRIBUTETOEJBATTRIBUTE, id);
+        result &= manager.insertValue(UMLATTRIBUTETOEJBATTRIBUTE, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ATTRIBUTE, umlAttributeId, "attribute", "transformerToEjbAttribute", id, UMLATTRIBUTETOEJBATTRIBUTE);
+        result &= manager.insertLink("EJBAttribute", ejbAttributeId, "ejbAttribute", "transformerToEjbAttribute", id, UMLATTRIBUTETOEJBATTRIBUTE);
 
         return result;
     }
@@ -338,10 +352,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlClassId + "To" + ejbDataClassId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLClassToEJBDataClass", id);
-        result &= manager.insertValue("UMLClassToEJBDataClass", "name", id, name);
-        result &= manager.insertLink("Class", umlClassId, "class", "transformerToEjbDataClass", id, "UMLClassToEJBDataClass");
-        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "ejbDataClass", "transformerToEjbDataClass", id, "UMLClassToEJBDataClass");
+        result &= manager.insertObject(UMLCLASSTOEJBDATACLASS, id);
+        result &= manager.insertValue(UMLCLASSTOEJBDATACLASS, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.CLASS, umlClassId, "class", "transformerToEjbDataClass", id, UMLCLASSTOEJBDATACLASS);
+        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "ejbDataClass", "transformerToEjbDataClass", id, UMLCLASSTOEJBDATACLASS);
 
         return result;
     }
@@ -360,10 +374,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationId + "To" + ejbDataAssociationId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationToEJBDataAssociation", id);
-        result &= manager.insertValue("UMLAssociationToEJBDataAssociation", "name", id, name);
-        result &= manager.insertLink("Association", umlAssociationId, "association", "transformerToEjbDataAssociationusingRule5", id, "UMLAssociationToEJBDataAssociation");
-        result &= manager.insertLink("EJBDataAssociation", ejbDataAssociationId, "ejbDataAssociation", "transformerToEjbDataAssociationusingRule5", id, "UMLAssociationToEJBDataAssociation");
+        result &= manager.insertObject(UMLASSOCIATIONTOEJBDATAASSOCIATION, id);
+        result &= manager.insertValue(UMLASSOCIATIONTOEJBDATAASSOCIATION, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATION, umlAssociationId, "association", "transformerToEjbDataAssociationusingRule5", id, UMLASSOCIATIONTOEJBDATAASSOCIATION);
+        result &= manager.insertLink("EJBDataAssociation", ejbDataAssociationId, "ejbDataAssociation", "transformerToEjbDataAssociationusingRule5", id, UMLASSOCIATIONTOEJBDATAASSOCIATION);
 
         return result;
     }
@@ -382,10 +396,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationClassId + "To" + ejbDataClassId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationClassToEJBDataClass", id);
-        result &= manager.insertValue("UMLAssociationClassToEJBDataClass", "name", id, name);
-        result &= manager.insertLink("AssociationClass", umlAssociationClassId, "associationClass", "transformerToEjbDataClassfromAssociationClass", id, "UMLAssociationClassToEJBDataClass");
-        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "ejbDataClass", "transformerToEjbDataClassfromAssociationClass", id, "UMLAssociationClassToEJBDataClass");
+        result &= manager.insertObject(UMLASSOCIATIONCLASSTOEJBDATACLASS, id);
+        result &= manager.insertValue(UMLASSOCIATIONCLASSTOEJBDATACLASS, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONCLASS, umlAssociationClassId, "associationClass", "transformerToEjbDataClassfromAssociationClass", id, UMLASSOCIATIONCLASSTOEJBDATACLASS);
+        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "ejbDataClass", "transformerToEjbDataClassfromAssociationClass", id, UMLASSOCIATIONCLASSTOEJBDATACLASS);
 
         return result;
     }
@@ -404,10 +418,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationEndId + "To" + ejbAssociationEndId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationEndToEJBDataEndusingRule8", id);
-        result &= manager.insertValue("UMLAssociationEndToEJBDataEndusingRule8", "name", id, name);
-        result &= manager.insertLink("AssociationEnd", umlAssociationEndId, "associationEnd", "transformerToEjbAssociationEndusingRule8", id, "UMLAssociationEndToEJBDataEndusingRule8");
-        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEndId, "ejbAssociationEnd", "transformerToEjbAssociationEndusingRule8", id, "UMLAssociationEndToEJBDataEndusingRule8");
+        result &= manager.insertObject(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8, id);
+        result &= manager.insertValue(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONEND, umlAssociationEndId, "associationEnd", "transformerToEjbAssociationEndusingRule8", id, UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8);
+        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEndId, "ejbAssociationEnd", "transformerToEjbAssociationEndusingRule8", id, UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE8);
 
         return result;
     }
@@ -426,10 +440,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationEndId + "To" + ejbAssociationEndId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationEndToEJBDataEndusingRule9", id);
-        result &= manager.insertValue("UMLAssociationEndToEJBDataEndusingRule9", "name", id, name);
-        result &= manager.insertLink("AssociationEnd", umlAssociationEndId, "associationEnd", "transformerToEjbAssociationEndusingRule9", id, "UMLAssociationEndToEJBDataEndusingRule9");
-        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEndId, "ejbAssociationEnd", "transformerToEjbAssociationEndusingRule9", id, "UMLAssociationEndToEJBDataEndusingRule9");
+        result &= manager.insertObject(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9, id);
+        result &= manager.insertValue(UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONEND, umlAssociationEndId, "associationEnd", "transformerToEjbAssociationEndusingRule9", id, UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9);
+        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEndId, "ejbAssociationEnd", "transformerToEjbAssociationEndusingRule9", id, UMLASSOCIATIONENDTOEJBDATAENDUSINGRULE9);
 
         return result;
     }
@@ -450,12 +464,12 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationEndId + "To" + ejbAssociationId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationEndEmEJBAssociationusingRule10", id);
-        result &= manager.insertValue("UMLAssociationEndEmEJBAssociationusingRule10", "name", id, name);
-        result &= manager.insertLink("AssociationEnd", umlAssociationEndId, "associationEnd", "transformerToEjbDataAssociationusingRule10", id, "UMLAssociationEndEmEJBAssociationusingRule10");
-        result &= manager.insertLink("EJBDataAssociation", ejbAssociationId, "ejbDataAssociation", "transformerToEjbDataAssociationusingRule10", id, "UMLAssociationEndEmEJBAssociationusingRule10");
-        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd1Id, "ejbAssociationEnd1", "transformerToEjbDataAssociationusingRule10_1", id, "UMLAssociationEndEmEJBAssociationusingRule10");
-        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd2Id, "ejbAssociationEnd2", "transformerToEjbDataAssociationusingRule10_2", id, "UMLAssociationEndEmEJBAssociationusingRule10");
+        result &= manager.insertObject(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE, id);
+        result &= manager.insertValue(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONEND, umlAssociationEndId, "associationEnd", "transformerToEjbDataAssociationusingRule10", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        result &= manager.insertLink("EJBDataAssociation", ejbAssociationId, "ejbDataAssociation", "transformerToEjbDataAssociationusingRule10", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd1Id, "ejbAssociationEnd1", "transformerToEjbDataAssociationusingRule10_1", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
+        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd2Id, "ejbAssociationEnd2", "transformerToEjbDataAssociationusingRule10_2", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE);
 
         return result;
     }
@@ -474,10 +488,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlAssociationEndId + "To" + ejbAssociationEnd2Id;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLAssociationEndEmEJBAssociationusingRule11", id);
-        result &= manager.insertValue("UMLAssociationEndEmEJBAssociationusingRule11", "name", id, name);
-        result &= manager.insertLink("AssociationEnd", umlAssociationEndId, "associationEnd", "transformerToEjbDataAssociationusingRule11", id, "UMLAssociationEndEmEJBAssociationusingRule11");
-        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd2Id, "ejbAssociationEnd2", "transformerToEjbDataAssociationusingRule11", id, "UMLAssociationEndEmEJBAssociationusingRule11");
+        result &= manager.insertObject(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11, id);
+        result &= manager.insertValue(UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.ASSOCIATIONEND, umlAssociationEndId, "associationEnd", "transformerToEjbDataAssociationusingRule11", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11);
+        result &= manager.insertLink("EJBAssociationEnd", ejbAssociationEnd2Id, "ejbAssociationEnd2", "transformerToEjbDataAssociationusingRule11", id, UMLASSOCIATIONENDEMEJBASSOCIATIONUSINGRULE11);
 
         return result;
     }
@@ -499,13 +513,13 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlClassId + "To" + ejbEntityComponentId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLClassToEJBEntityComponent", id);
-        result &= manager.insertValue("UMLClassToEJBEntityComponent", "name", id, name);
-        result &= manager.insertLink("Class", umlClassId, "class", "transformerToEntityComponent", id, "UMLClassToEJBEntityComponent");
-        result &= manager.insertLink("EJBEntityComponent", ejbEntityComponentId, "entityComponent", "transformerToEntityComponent", id, "UMLClassToEJBEntityComponent");
-        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "dataClass", "transformerToEntityComponent", id, "UMLClassToEJBEntityComponent");
-        result &= manager.insertLink("EJBDataSchema", ejbDataSchemaId, "dataSchema", "transformerToEntityComponent", id, "UMLClassToEJBEntityComponent");
-        result &= manager.insertLink("EJBServingAttribute", ejbServingAttributeId, "servingAttribute", "transformerToEntityComponent", id, "UMLClassToEJBEntityComponent");
+        result &= manager.insertObject(UMLCLASSTOEJBENTITYCOMPONENT, id);
+        result &= manager.insertValue(UMLCLASSTOEJBENTITYCOMPONENT, "name", id, name);
+        result &= manager.insertLink(UMLMetaModeler.CLASS, umlClassId, "class", "transformerToEntityComponent", id, UMLCLASSTOEJBENTITYCOMPONENT);
+        result &= manager.insertLink("EJBEntityComponent", ejbEntityComponentId, "entityComponent", "transformerToEntityComponent", id, UMLCLASSTOEJBENTITYCOMPONENT);
+        result &= manager.insertLink("EJBDataClass", ejbDataClassId, "dataClass", "transformerToEntityComponent", id, UMLCLASSTOEJBENTITYCOMPONENT);
+        result &= manager.insertLink("EJBDataSchema", ejbDataSchemaId, "dataSchema", "transformerToEntityComponent", id, UMLCLASSTOEJBENTITYCOMPONENT);
+        result &= manager.insertLink("EJBServingAttribute", ejbServingAttributeId, "servingAttribute", "transformerToEntityComponent", id, UMLCLASSTOEJBENTITYCOMPONENT);
 
         return result;
     }
@@ -524,10 +538,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         boolean result = true;
         String name = umlSetId + "To" + ejbSetId;
         String id = name + System.nanoTime();
-        result &= manager.insertObject("UMLSetToEJBSet", id);
-        result &= manager.insertValue("UMLSetToEJBSet", "name", id, name);
-        result &= manager.insertLink("UMLSet", umlSetId, "umlSet", "transformerToSet", id, "UMLSetToEJBSet");
-        result &= manager.insertLink("EJBSet", ejbSetId, "ejbSet", "transformerToSet", id, "UMLSetToEJBSet");
+        result &= manager.insertObject(UMLSETTOEJBSET, id);
+        result &= manager.insertValue(UMLSETTOEJBSET, "name", id, name);
+        result &= manager.insertLink("UMLSet", umlSetId, "umlSet", "transformerToSet", id, UMLSETTOEJBSET);
+        result &= manager.insertLink("EJBSet", ejbSetId, "ejbSet", "transformerToSet", id, UMLSETTOEJBSET);
 
         return result;
     }
@@ -541,7 +555,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
      * @return  a string with the first letter lowered
      */
     protected String lowerFirstLetter(String string) {
-        return string.replaceFirst(string.substring(0,1), string.substring(0,1).toLowerCase());
+        return string.replaceFirst(string.substring(0, 1), string.substring(0, 1).toLowerCase());
     }
 
     /**
@@ -555,15 +569,15 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         int fim = result.indexOf("}");
 
         if (inicio < 0 && fim < 0) {
-            return result.replace("{","").replace("}","").replace(" ", "").replace("'","").split(",");
+            return result.replace("{", "").replace("}", "").replace(" ", "").replace("'", "").split(",");
         } else {
             if (inicio < 0) {
-                return result.substring(0, fim).replace("{","").replace("}","").replace(" ", "").replace("'","").split(",");
+                return result.substring(0, fim).replace("{", "").replace("}", "").replace(" ", "").replace("'", "").split(",");
             } else if (fim < 0) {
-                return result.substring(inicio+1,result.length()).replace("{","").replace("}","").replace(" ", "").replace("'","").split(",");
+                return result.substring(inicio + 1, result.length()).replace("{", "").replace("}", "").replace(" ", "").replace("'", "").split(",");
             }
         }
-        String[] processedResult = result.substring(inicio+1, fim).replace("{","").replace("}","").replace(" ", "").replace("'","").split(",");
+        String[] processedResult = result.substring(inicio + 1, fim).replace("{", "").replace("}", "").replace(" ", "").replace("'", "").split(",");
         if (processedResult != null && processedResult.length == 1 && "".equals(processedResult[0])) {
             return new String[0];
         }
@@ -706,9 +720,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
      *
      * @throws ContractException
      */
+    @Override
     public void transformDomain() throws ContractException {
         // DataType -> EJBDataType
-            transformUMLDataTypetoEJBDataType();
+        transformUMLDataTypetoEJBDataType();
 
         // Cria elementos e linka (Caso unico: Class e AssociationClass -> EJBKeyClass)
         transformUMLClasstoEJBKeyClass();                 // Regra 1
@@ -749,14 +764,14 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     private void transformUMLDataTypetoEJBDataType() throws ContractException {
         ModelManager manager = ModelManager.instance();
         // "Integer" -> "EJBInteger"
-        if (!"EJBInteger".equals(manager.query("EJBInteger"))){
-          targetDomain.insertEJBDataType("EJBInteger", "Integer");
+        if (!"EJBInteger".equals(manager.query("EJBInteger"))) {
+            targetDomain.insertEJBDataType("EJBInteger", "Integer");
         }
         this.insertUMLDataTypeToEJBDataType("UMLInteger", "EJBInteger");
 
         // "Double" -> "EJBDouble"
-        if (!"EJBDouble".equals(manager.query("EJBDouble"))){
-          targetDomain.insertEJBDataType("EJBDouble", "Double");
+        if (!"EJBDouble".equals(manager.query("EJBDouble"))) {
+            targetDomain.insertEJBDataType("EJBDouble", "Double");
         }
         this.insertUMLDataTypeToEJBDataType("UMLDouble", "EJBDouble");
 
@@ -764,31 +779,32 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLDataTypeToEJBDataType("UMLReal", "EJBDouble");
 
         // "String" -> "EJBString"
-        if (!"EJBString".equals(manager.query("EJBString"))){
-          targetDomain.insertEJBDataType("EJBString", "String");
+        if (!"EJBString".equals(manager.query("EJBString"))) {
+            targetDomain.insertEJBDataType("EJBString", "String");
         }
         this.insertUMLDataTypeToEJBDataType("UMLString", "EJBString");
 
         // "Date" -> "EJBDate"
-        if (!"EJBDate".equals(manager.query("EJBDate"))){
-          targetDomain.insertEJBDataType("EJBDate", "Date");
+        if (!"EJBDate".equals(manager.query("EJBDate"))) {
+            targetDomain.insertEJBDataType("EJBDate", "Date");
         }
         this.insertUMLDataTypeToEJBDataType("UMLDate", "EJBDate");
 
         // "Boolean" -> "EJBBoolean"
-        if (!"EJBBoolean".equals(manager.query("EJBBoolean"))){
-          targetDomain.insertEJBDataType("EJBBoolean", "Boolean");
+        if (!"EJBBoolean".equals(manager.query("EJBBoolean"))) {
+            targetDomain.insertEJBDataType("EJBBoolean", "Boolean");
         }
         this.insertUMLDataTypeToEJBDataType("UMLBoolean", "EJBBoolean");
 
         // "Void" -> "EJBVoid"
-        if (!"EJBVoid".equals(manager.query("EJBVoid"))){
-          targetDomain.insertEJBDataType("EJBVoid", "void");
+        if (!"EJBVoid".equals(manager.query("EJBVoid"))) {
+            targetDomain.insertEJBDataType("EJBVoid", "void");
         }
         this.insertUMLDataTypeToEJBDataType("UMLVoid", "EJBVoid");
     }
     //--------------------------------------------------------------------------
     // REGRA 01 - Completo (Cria e linka)
+
     private void transformUMLClasstoEJBKeyClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -801,6 +817,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void createEJBKeyClassfromUMLClass(String umlClassId, String umlClassName) throws ContractException {
         String ejbKeyClassName = umlClassName + "Key";
         String ejbKeyClassId = ejbKeyClassName + System.nanoTime();
@@ -813,6 +830,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     }
     //--------------------------------------------------------------------------
     // REGRA 02 - Completo (Cria e linka)
+
     private void transformUMLAssociationClasstoEJBKeyClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -823,9 +841,10 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBKeyClassfromUMLAssociationClass(id, name);
         }
     }
+
     private void createEJBKeyClassfromUMLAssociationClass(String umlAssociationClassId, String umlAssociationClassName) throws ContractException {
         ModelManager manager = ModelManager.instance();
-        
+
         String ejbKeyClassName = umlAssociationClassName + "Key";
         String ejbKeyClassId = ejbKeyClassName + System.nanoTime();
         targetDomain.insertEJBKeyClass(ejbKeyClassId, ejbKeyClassName);
@@ -852,6 +871,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 3
     // Criacao
+
     private void transformUMLClasstoEJBEntityComponent() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -864,6 +884,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void createEjbEntityComponentfromUmlClass(String classId, String className) throws ContractException {
         // Cria EJBEntityComponent
         String ejbEntityComponentName = className;
@@ -892,6 +913,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLClassToEJBEntityComponent(classId, ejbEntityComponentId, ejbDataClassId, ejbDataSchemaId, ejbServingAttributeId);
     }
     // Linkagem
+
     private void linkUMLClasstoEJBEntityComponent() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -903,6 +925,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEjbEntityComponentfromUmlClass(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -954,6 +977,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 4
     // Criacao
+
     private void transformUMLClasstoEJBDataClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -965,6 +989,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void createEJBDataClassfromClass(String classId, String className) throws ContractException {
         String ejbDataClassName = className;
         String ejbDataClassId = ejbDataClassName + System.nanoTime();
@@ -973,6 +998,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLClassToEJBDataClass(classId, ejbDataClassId);
     }
     // Linkagem
+
     private void linkUMLClasstoEJBDataClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -983,6 +1009,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBDataClassfromClass(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1015,6 +1042,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 5
     // Criacao
+
     private void transformUMLAssociationtoEJBDataAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1027,6 +1055,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void createEJBDataAssociationfromAssociation(String id, String name) throws ContractException {
         String ejbDataAssociationName = name;
         String ejbDataAssociationId = ejbDataAssociationName + System.nanoTime();
@@ -1035,6 +1064,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationToEJBDataAssociation(id, ejbDataAssociationId);
     }
     // Linkagem
+
     private void linkUMLAssociationtoEJBDataAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1046,6 +1076,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBDataAssociationfromAssociation(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1069,6 +1100,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 6
     // Criacao
+
     private void transformUMLAssociationClasstoEJBDataClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1079,6 +1111,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBDataClassfromAssociationClass(id, name);
         }
     }
+
     private void createEJBDataClassfromAssociationClass(String id, String name) throws ContractException {
         String ejbDataClassName = name;
         String ejbDataClassId = ejbDataClassName + System.nanoTime();
@@ -1087,6 +1120,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationClassToEJBDataClass(id, ejbDataClassId);
     }
     // Linkagem
+
     private void linkUMLAssociationClasstoEJBDataClass() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1097,6 +1131,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBDataClassfromAssociationClass(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1129,6 +1164,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 7
     // Criacao
+
     private void transformUMLAttributetoEJBAttribute() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1139,6 +1175,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBAttributefromAttribute(id, name);
         }
     }
+
     private void createEJBAttributefromAttribute(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1150,6 +1187,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAttributeToEJBAttribute(id, ejbAttributeId);
     }
     // Linkagem
+
     private void linkUMLAttributetoEJBAttribute() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1161,6 +1199,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBAttributefromAttribute(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1176,6 +1215,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 8
     // Criacao
+
     private void transformRule8UMLAssociationEndtoEJBAssociationEnd() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1186,6 +1226,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBAssociationEndfromAssociationEndusingRule8(id, name);
         }
     }
+
     private void createEJBAssociationEndfromAssociationEndusingRule8(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1199,6 +1240,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationEndToEJBDataEndusingRule8(id, ejbAssociationEndId);
     }
     // Linkagem
+
     private void linkRule8UMLAssociationEndtoEJBAssociationEnd() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1210,6 +1252,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBAssociationEndfromAssociationEndusingRule8(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1224,6 +1267,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 9
     // Criacao
+
     private void transformRule9UMLAssociationEndtoEJBAssociationEnd() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1234,6 +1278,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBAssociationEndfromAssociationEndusingRule9(id, name);
         }
     }
+
     private void createEJBAssociationEndfromAssociationEndusingRule9(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1247,6 +1292,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationEndToEJBDataEndusingRule9(id, ejbAssociationEndId);
     }
     // Linkagem
+
     private void linkRule9UMLAssociationEndtoEJBAssociationEnd() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1258,6 +1304,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBAssociationEndfromAssociationEndusingRule9(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1272,6 +1319,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 10
     // Criacao
+
     private void transformRule10UMLAssociationEndtoEJBAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1282,6 +1330,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBAssociationEndfromAssociationusingRule10(id, name);
         }
     }
+
     private void createEJBAssociationEndfromAssociationusingRule10(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1309,6 +1358,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationEndEmEJBAssociationusingRule10(id, ejbAssociationId, ejbAssociationEnd1Id, ejbAssociationEnd2Id);
     }
     // Linkagem
+
     private void linkRule10UMLAssociationEndtoEJBAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1320,6 +1370,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBAssociationEndfromAssociationusingRule10(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1348,6 +1399,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 11
     // Criacao
+
     private void transformRule11UMLAssociationEndtoEJBAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1358,6 +1410,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBAssociationEndfromAssociationusingRule11(id, name);
         }
     }
+
     private void createEJBAssociationEndfromAssociationusingRule11(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1372,6 +1425,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLAssociationEndEmEJBAssociationusingRule11(id, ejbAssociationEnd2Id);
     }
     // Linkagem
+
     private void linkRule11UMLAssociationEndtoEJBAssociation() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1382,6 +1436,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBAssociationEndfromAssociationusingRule11(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1399,6 +1454,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 12
     // Criacao
+
     private void transformRuleUMLOperationtoBusinessMethod() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1411,6 +1467,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void createBusinessMethodfromOperation(String id, String name) throws ContractException {
         String businessMethodName = name;
         String businessMethodId = name + System.nanoTime();
@@ -1420,6 +1477,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLOperationToBusinessMethod(id, businessMethodId);
     }
     // Linkagem
+
     private void linkRuleUMLOperationtoBusinessMethod() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1431,6 +1489,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkBusinessMethodfromOperation(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1455,6 +1514,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // REGRA 13
     // Criacao
+
     private void transformRuleUMLParametertoEJBParameter() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1465,6 +1525,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBParameterfromParameter(id, name);
         }
     }
+
     private void createEJBParameterfromParameter(String id, String name) throws ContractException {
         String ejbParameterName = name;
         String ejbParameterId = ejbParameterName + System.nanoTime();
@@ -1474,6 +1535,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLParameterToEJBParameter(id, ejbParameterId);
     }
     // Linkagem
+
     private void linkUMLParametertoEJBParameter() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1484,6 +1546,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBParameterfromParameter(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1499,6 +1562,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
     //--------------------------------------------------------------------------
     // MINHA REGRA
     // Criacao
+
     private void transformUMLSettoEJBSet() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1509,6 +1573,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             createEJBSetfromUMLSet(id, name);
         }
     }
+
     private void createEJBSetfromUMLSet(String id, String name) throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1520,6 +1585,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
         this.insertUMLSetToEJBSet(id, ejbSetId);
     }
     // Linkagem
+
     private void linkUMLSettoEJBSet() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
@@ -1530,6 +1596,7 @@ public class UMLEJBDomain extends JoinedDomain<UMLDomain, EJBDomain> {
             }
         }
     }
+
     private void linkEJBSetfromUMLSet(String id) throws ContractException {
         ModelManager manager = ModelManager.instance();
 

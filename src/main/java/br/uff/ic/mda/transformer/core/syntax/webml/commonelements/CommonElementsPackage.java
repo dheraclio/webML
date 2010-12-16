@@ -85,6 +85,12 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
      *
      */
     public static final String DOMAIN = PREFIX + "Domain";
+    /**
+     *
+     */
+    public static final String WEBML_IDENTIFIERTYPE = PREFIX + "IdentifierType";
+
+    //--------------------------------------------------------------------------
     //UML Base
     private static final String UMLPREFIX = "WEBMLUML_";
     /**
@@ -139,6 +145,8 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
      *
      */
     public static final String UMLOPERATION = UMLPREFIX + "Operation";
+
+    
     /**
      *
      */
@@ -146,11 +154,16 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
     public static final String UMLINTEGER = UMLPREFIX + "UMLInteger";
     public static final String UMLSTRING = UMLPREFIX + "UMLString";
     public static final String UMLBOOLEAN = UMLPREFIX + "UMLBoolean";
-    public static final String UMLDATE = UMLPREFIX + "UMLDate";
+    
+    public static final String UMLDOUBLE = UMLPREFIX + "UMLDate";
+    public static final String UMLREAL = UMLPREFIX + "UMLDate";
+
 
     //Java Profile
     private static final String JAVAPREFIX = "WEBMLJAVA_";
+    public static final String JAVADATE = JAVAPREFIX + "UMLDate";
     public static final String JAVAVOID = JAVAPREFIX +"UMLVoid";
+
 
     /**
      *
@@ -202,7 +215,7 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
 
         manager.insertAttribute(DERIVATIONCONSTRAINT, DERIVATIONCONSTRAINT_DERIVATIONQUERY, TYPE_STRING);
 
-        //manager.insertAttribute(IDENTIFIEDELEMENT, IDENTIFIEDELEMENT_ID, TYPE_IDENTIFIER);
+        //manager.insertAttribute(IDENTIFIEDELEMENT, IDENTIFIEDELEMENT_ID, WEBML_IDENTIFIERTYPE);
     }
 
     private static void insertMetamodelAssociations() throws ContractException {
@@ -227,13 +240,13 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
         insertType(UMLINTEGER, "Integer");
         insertType(UMLSTRING, "String");
         insertType(UMLBOOLEAN, "Boolean");
-        insertType(UMLDATE, "Date");
+        insertType(JAVADATE, "Date");
 
         //Java Profile
         insertType(JAVAVOID, "void");
 
         //WebML Profile
-        insertType(TYPE_IDENTIFIER, "String");
+        insertType(WEBML_IDENTIFIERTYPE, "String");
     }
 
     /**
