@@ -4,16 +4,16 @@
  */
 package br.uff.ic.mda.transformer;
 
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.presentationview.PresentationViewPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.hypertextview.HypertextViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.DataViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.PresentationViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.HypertextViewPackage;
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.Domain;
 import br.uff.ic.mda.tclib.IValidator;
 import br.uff.ic.mda.tclib.IXMIParser;
 import br.uff.ic.mda.tclib.ModelManager;
 import br.uff.ic.mda.transformer.core.syntax.webml.WebMLXMIParser;
-import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.CommonElementsPackage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

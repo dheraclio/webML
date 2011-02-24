@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.uff.ic.mda.transformer.core.syntax.webml.commonelements;
+package br.uff.ic.mda.transformer.core.syntax.webml;
 
 import br.uff.ic.mda.tclib.ContractException;
-import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
 
 /**
  * Modifications:
@@ -16,6 +15,8 @@ import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
  *
  */
 public abstract class CommonElementsPackage extends WebMLBasicPackage {
+
+
 
     /**
      *
@@ -73,10 +74,36 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
      *
      */
     public static final String DOMAINELEMENT = PREFIX + "DomainElement";
+    public static final String ROLE_ASSOCIATION = "association";
+    public static final String ROLE_ASSOCIATIONENDS = "associationEnds";
+    public static final String ROLE_CLASS = "class";
+    public static final String ROLE_CLASSES = "classes";
+    public static final String ROLE_CLASSIFIER = "classifier";
+    public static final String ROLE_ELEMENTTYPE = "elementType";
+    public static final String ROLE_FEATURE = "feature";
+    public static final String ROLE_IMPLEMENTEDINTERFACES = "implementedInterfaces";
+    public static final String ROLE_INHERITEDBY = "inheritedBy";
+    public static final String ROLE_INHERITSFROM = "inheritsFrom";
+    public static final String ROLE_OPERATION = "operation";
+    public static final String ROLE_OTHEREND = "otherEnd";
+    public static final String ROLE_OTHERS = "others";
+    public static final String ROLE_PARAMETER = "parameter";
+    public static final String ROLE_SETA = "setA";
+    public static final String ROLE_TYPES = "types";
+    public static final String ATTR_COMPOSITION = "composition";
+    public static final String ATTR_LOWER = "lower";
+    public static final String ATTR_NAME = "name";
+    public static final String ATTR_UPPER = "upper";
+    public static final String ATTR_VISIBILITY = "visibility";
     /**
      *
      */
     public static final String TYPE = PREFIX + "Type";
+    public static final String TYPENAME_BOOLEAN = "Boolean";
+    public static final String TYPENAME_DATE = "Date";
+    public static final String TYPENAME_INTEGER = "Integer";
+    public static final String TYPENAME_STRING = "String";
+    public static final String TYPENAME_VOID = "void";
     /**
      *
      */
@@ -215,7 +242,7 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
 
         manager.insertAttribute(DERIVATIONCONSTRAINT, DERIVATIONCONSTRAINT_DERIVATIONQUERY, TYPE_STRING);
 
-        //manager.insertAttribute(IDENTIFIEDELEMENT, IDENTIFIEDELEMENT_ID, WEBML_IDENTIFIERTYPE);
+        manager.insertAttribute(IDENTIFIEDELEMENT, IDENTIFIEDELEMENT_ID, TYPE_STRING);
     }
 
     private static void insertMetamodelAssociations() throws ContractException {
@@ -237,16 +264,16 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
      */
     public static void createSpecification() throws ContractException {
         //UML Standart Elements (from XMIParser)
-        insertType(UMLINTEGER, "Integer");
-        insertType(UMLSTRING, "String");
-        insertType(UMLBOOLEAN, "Boolean");
-        insertType(JAVADATE, "Date");
+        insertType(UMLINTEGER, TYPENAME_INTEGER);
+        insertType(UMLSTRING, TYPENAME_STRING);
+        insertType(UMLBOOLEAN, TYPENAME_BOOLEAN);
+        insertType(JAVADATE, TYPENAME_DATE);
 
         //Java Profile
-        insertType(JAVAVOID, "void");
+        insertType(JAVAVOID, TYPENAME_VOID);
 
         //WebML Profile
-        insertType(WEBML_IDENTIFIERTYPE, "String");
+        insertType(WEBML_IDENTIFIERTYPE, TYPENAME_STRING);
     }
 
     /**
@@ -255,10 +282,9 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
      * @param type
      * @throws ContractException
      */
-    protected static void insertType(String identifier, String type) throws ContractException {
-        final String attName = "name";
+    protected static void insertType(String identifier, String type) throws ContractException {        
         manager.insertObject(UMLDATATYPE, identifier);
-        manager.insertValue(UMLDATATYPE, attName, identifier, type);
+        manager.insertValue(UMLDATATYPE, ATTR_NAME, identifier, type);
     }
 
     private static void insertUMLBaseModel() throws ContractException {
@@ -293,19 +319,19 @@ public abstract class CommonElementsPackage extends WebMLBasicPackage {
         manager.insertGeneralization(UMLOPERATION, UMLFEATURE);
         manager.insertGeneralization(UMLPARAMETER, UMLTYPED);
 
-        manager.insertAttribute(UMLMODELELEMENT, "name", "String");
-        manager.insertAttribute(UMLFEATURE, "visibility", "String");
-        manager.insertAttribute(UMLASSOCIATIONEND, "lower", "String");
-        manager.insertAttribute(UMLASSOCIATIONEND, "upper", "String");
-        manager.insertAttribute(UMLASSOCIATIONEND, "composition", "Boolean");
+        manager.insertAttribute(UMLMODELELEMENT, ATTR_NAME, TYPENAME_STRING);
+        manager.insertAttribute(UMLFEATURE, ATTR_VISIBILITY, TYPENAME_STRING);
+        manager.insertAttribute(UMLASSOCIATIONEND, ATTR_LOWER, TYPENAME_STRING);
+        manager.insertAttribute(UMLASSOCIATIONEND, ATTR_UPPER, TYPENAME_STRING);
+        manager.insertAttribute(UMLASSOCIATIONEND, ATTR_COMPOSITION, TYPENAME_BOOLEAN);
 
-        manager.insertAssociation(UMLASSOCIATIONEND, "otherEnd", CARD_0_1, CARD_0_N, "others", UMLASSOCIATIONEND);
-        manager.insertAssociation(UMLASSOCIATIONEND, "associationEnds", CARD_1_N, CARD_1, "association", UMLASSOCIATION);
-        manager.insertAssociation(UMLOPERATION, "operation", CARD_1, CARD_N, "parameter", UMLPARAMETER);
-        manager.insertAssociation(UMLCLASS, "class", CARD_0_1, CARD_N, "feature", UMLFEATURE);
-        manager.insertAssociation(UMLCLASS, "classes", CARD_N, CARD_N, "implementedInterfaces", UMLINTERFACE);
-        manager.insertAssociation(UMLCLASS, "inheritsFrom", CARD_N, CARD_N, "inheritedBy", UMLCLASS);
-        manager.insertAssociation(UMLCLASSIFIER, "classifier", CARD_0_1, CARD_N, "types", UMLTYPED);
-        manager.insertAssociation(UMLUMLSET, "setA", CARD_0_N, CARD_1, "elementType", UMLCLASSIFIER);
+        manager.insertAssociation(UMLASSOCIATIONEND, ROLE_OTHEREND, CARD_0_1, CARD_0_N, ROLE_OTHERS, UMLASSOCIATIONEND);
+        manager.insertAssociation(UMLASSOCIATIONEND, ROLE_ASSOCIATIONENDS, CARD_1_N, CARD_1, ROLE_ASSOCIATION, UMLASSOCIATION);
+        manager.insertAssociation(UMLOPERATION, ROLE_OPERATION, CARD_1, CARD_N, ROLE_PARAMETER, UMLPARAMETER);
+        manager.insertAssociation(UMLCLASS, ROLE_CLASS, CARD_0_1, CARD_N, ROLE_FEATURE, UMLFEATURE);
+        manager.insertAssociation(UMLCLASS, ROLE_CLASSES, CARD_N, CARD_N, ROLE_IMPLEMENTEDINTERFACES, UMLINTERFACE);
+        manager.insertAssociation(UMLCLASS, ROLE_INHERITSFROM, CARD_N, CARD_N, ROLE_INHERITEDBY, UMLCLASS);
+        manager.insertAssociation(UMLCLASSIFIER, ROLE_CLASSIFIER, CARD_0_1, CARD_N, ROLE_TYPES, UMLTYPED);
+        manager.insertAssociation(UMLUMLSET, ROLE_SETA, CARD_0_N, CARD_1, ROLE_ELEMENTTYPE, UMLCLASSIFIER);
     }
 }

@@ -10,10 +10,8 @@ import br.uff.ic.mda.transformer.UMLDomain;
 import br.uff.ic.mda.transformer.WebMLDomain;
 import br.uff.ic.mda.transformer.WebMLUMLDomain;
 import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
-import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
-import br.uff.ic.mda.transformer.core.syntax.webmluml.transformationrules.TransformationRule;
-import br.uff.ic.mda.transformer.core.syntax.webmluml.transformationrules.TransformationRuleFactory;
+import br.uff.ic.mda.transformer.core.syntax.webml.CommonElementsPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.DataViewPackage;
 import br.uff.ic.mda.transformer.core.util.BasicModeler;
 import java.util.LinkedList;
 
@@ -31,7 +29,7 @@ public abstract class WebMLUMLMetaModeler extends BasicModeler {
     /**
      *
      */
-    public static final String PREFIX = "WebMLUML_";
+    public static final String PREFIX = "WEBMLUML_";
     //WebML types to UML types
     /**
      *
@@ -68,18 +66,18 @@ public abstract class WebMLUMLMetaModeler extends BasicModeler {
 
     /**
      *
-     * @param aThis
+     * @param domain
      * @throws ContractException
      */
-    public static void applyRules(WebMLUMLDomain aThis) throws ContractException {
+    public static void applyRules(WebMLUMLDomain domain) throws ContractException {
 
         //First transform
-        for (TransformationRule tr : getRules(aThis)) {
+        for (TransformationRule tr : getRules(domain)) {
             tr.transform();
         }
 
         //Then link
-        for (TransformationRule tr : getRules(aThis)) {
+        for (TransformationRule tr : getRules(domain)) {
             tr.link();
         }
     }

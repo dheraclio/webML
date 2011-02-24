@@ -1,4 +1,4 @@
-package br.uff.ic.mda.transformer.core.syntax.webmluml.transformationrules;
+package br.uff.ic.mda.transformer.core.syntax.webmluml;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.transformer.UMLDomain;
@@ -67,9 +67,9 @@ public class TransformationRuleFactory {
     private static LinkedList<String> getRuleNames() {
         //Order of execution
         if (ruleNames.isEmpty()) {
-            ruleNames.add(TYPETR);
+            ruleNames.add(TYPETR);            
+            ruleNames.add(ENTITYTR);
             ruleNames.add(ATTRIBUTETR);
-            ruleNames.add(ENTITYTR);   
             ruleNames.add(RELATIONSHIPTR);
         }
         return ruleNames;

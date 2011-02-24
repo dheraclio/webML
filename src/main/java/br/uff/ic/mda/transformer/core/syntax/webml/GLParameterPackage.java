@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package br.uff.ic.mda.transformer.core.syntax.webml.hypertextview;
+package br.uff.ic.mda.transformer.core.syntax.webml;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.ModelManager;
 import br.uff.ic.mda.transformer.core.syntax.webml.WebMLBasicPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.CommonElementsPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.DataViewPackage;
 
 /**
  *

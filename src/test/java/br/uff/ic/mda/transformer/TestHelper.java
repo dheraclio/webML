@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.uff.ic.mda.transformer.util;
+package br.uff.ic.mda.transformer;
 
 import org.junit.Test;
 import java.io.InputStream;

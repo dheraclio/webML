@@ -2,6 +2,7 @@ package br.uff.ic.mda.transformer.core.syntax.ejb;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.ModelManager;
+import br.uff.ic.mda.transformer.EJBDomain;
 import br.uff.ic.mda.transformer.core.syntax.java.Attribute;
 import br.uff.ic.mda.transformer.core.syntax.java.Class;
 import br.uff.ic.mda.transformer.core.syntax.java.Constructor;
@@ -16,6 +17,7 @@ import br.uff.ic.mda.transformer.core.util.StringUtils;
  * @author Daniel
  */
 public class EJBCodeGenerator{
+    private static final String TYPE = EJBDomain.ROLE_TYPE;
 
     public static void generate() throws ContractException {
         generateEJBKeyClass();
@@ -66,7 +68,7 @@ public class EJBCodeGenerator{
                     String idAtributo = attributeId.replace("'", "").trim();
                     Attribute attribute = JavaSyntax.getJavaAttribute();
                     attribute.setVisibility("public");
-                    query = idAtributo + ".type";
+                    query = idAtributo + "." + TYPE;
                     attribute.setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(query))[0]));
                     query = idAtributo + ".name";
                     attribute.setName(ModelManager.processQueryResult(manager.query(query))[0], true);
@@ -173,12 +175,12 @@ public class EJBCodeGenerator{
                 String[] businessMethodIds = ModelManager.processQueryResult(manager.query(id + ".entityComponent.feature->select(f : EJBFeature | f.oclIsTypeOf(BusinessMethod))->collect(f : EJBFeature | f.oclAsType(BusinessMethod))->select(bm : BusinessMethod | bm.name.substring(1, 4) <> 'find')"));
                 for (String businessMethodId : businessMethodIds) {
                     Method method = JavaSyntax.getJavaMethod();
-                    method.setVisibility("public").setReturnType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(businessMethodId + ".type"))[0])).setName(manager.query(businessMethodId + ".name").replace("'", "")).addException("RemoteException").setAbstractMethod(true);
+                    method.setVisibility("public").setReturnType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(businessMethodId + "."+TYPE))[0])).setName(manager.query(businessMethodId + ".name").replace("'", "")).addException("RemoteException").setAbstractMethod(true);
 
                     String[] parameterIds = ModelManager.processQueryResult(manager.query(businessMethodId + ".parameter"));
                     for (String parameterId : parameterIds) {
                         Parameter parameter = JavaSyntax.getJavaParameter();
-                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + ".type"))[0]));
+                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + "."+TYPE))[0]));
                         method.addParameter(parameter);
                     }
                     ejbObject.addMethod(method);
@@ -232,7 +234,7 @@ public class EJBCodeGenerator{
                     String[] parameterIds = ModelManager.processQueryResult(manager.query(finderId + ".parameter"));
                     for (String parameterId : parameterIds) {
                         Parameter parameter = JavaSyntax.getJavaParameter();
-                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + ".type"))[0]));
+                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + "."+TYPE))[0]));
                         method.addParameter(parameter);
                     }
                     ejbHome.addMethod(method);
@@ -307,7 +309,7 @@ public class EJBCodeGenerator{
                     String[] parameterIds = ModelManager.processQueryResult(manager.query(finderId + ".parameter"));
                     for (String parameterId : parameterIds) {
                         Parameter parameter = JavaSyntax.getJavaParameter();
-                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + ".type"))[0]));
+                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + "."+TYPE))[0]));
                         method.addParameter(parameter);
                     }
                     entityBean.addMethod(method);
@@ -317,7 +319,7 @@ public class EJBCodeGenerator{
                     Method method = JavaSyntax.getJavaMethod();
                     method.setVisibility("public").setName(manager.query(businessMethodId + ".name").replace("'", ""));
 
-                    String returnType = convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(businessMethodId + ".type"))[0]);
+                    String returnType = convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(businessMethodId + "."+TYPE))[0]);
                     method.setReturnType(returnType);
                     if ("void".equals(returnType)) {
                         method.setCode(new String[]{"// TODO"});
@@ -328,7 +330,7 @@ public class EJBCodeGenerator{
                     String[] parameterIds = ModelManager.processQueryResult(manager.query(businessMethodId + ".parameter"));
                     for (String parameterId : parameterIds) {
                         Parameter parameter = JavaSyntax.getJavaParameter();
-                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + ".type"))[0]));
+                        parameter.setName(manager.query(parameterId + ".name").replace("'", ""), true).setType(convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(parameterId + "."+TYPE))[0]));
                         method.addParameter(parameter);
                     }
                     entityBean.addMethod(method);
@@ -390,8 +392,8 @@ public class EJBCodeGenerator{
                 for (String associationEndId : associationEndIds) {
 //                    String nome = this.dominio.query(idAssocEnd + ".name").replace("'", "") + tratarResultadoQuery(this.dominio.query(idAssocEnd + ".type.name"))[0];
                     String name = manager.query(associationEndId + ".name").replace("'", "");
-                    boolean isDataClass = "true".equals(manager.query(associationEndId + ".type.oclIsTypeOf(EJBDataClass)").replace("'", ""));
-                    String type = isDataClass ? ModelManager.processQueryResult(manager.query(associationEndId + ".type.name"))[0] + "DataObject" : ModelManager.processQueryResult(manager.query(associationEndId + ".type.name"))[0];
+                    boolean isDataClass = "true".equals(manager.query(associationEndId + "."+ TYPE +".oclIsTypeOf(EJBDataClass)").replace("'", ""));
+                    String type = isDataClass ? ModelManager.processQueryResult(manager.query(associationEndId + "."+ TYPE +".name"))[0] + "DataObject" : ModelManager.processQueryResult(manager.query(associationEndId + "."+ TYPE +".name"))[0];
                     Attribute attribute = JavaSyntax.getJavaAttribute().setVisibility("private").setType(type).setName(name);
                     dataClass.addAttribute(attribute);
 
@@ -409,7 +411,7 @@ public class EJBCodeGenerator{
                 for (String associationEndId : associationEndIds) {
                     String simpleName = manager.query(associationEndId + ".name").replace("'", "");
 //                    String nomeCompleto = nomeSimples + tratarResultadoQuery(this.dominio.query(idAssocEnd + ".type.name"))[0];
-                    String type = "true".equals(manager.query(associationEndId + ".type.oclIsTypeOf(EJBDataClass)").replace("'", "")) ? ModelManager.processQueryResult(manager.query(associationEndId + ".type.name"))[0] + "DataObject" : ModelManager.processQueryResult(manager.query(associationEndId + ".type.name"))[0];
+                    String type = "true".equals(manager.query(associationEndId + "."+ TYPE +".oclIsTypeOf(EJBDataClass)").replace("'", "")) ? ModelManager.processQueryResult(manager.query(associationEndId + "."+ TYPE +".name"))[0] + "DataObject" : ModelManager.processQueryResult(manager.query(associationEndId + "."+ TYPE +".name"))[0];
                     String listType = "List<" + type + ">";
 //                    Atributo atrib = SintaxeJava.getJavaAttribute().setVisibilidade("private").setTipo(tipoLista).setNome(nomeCompleto);
                     Attribute attribute = JavaSyntax.getJavaAttribute().setVisibility("private").setType(listType).setName(simpleName);
@@ -434,7 +436,7 @@ public class EJBCodeGenerator{
                     String attributeName = manager.query(attributeId + ".name").replace("'", "");
                     // mudei aki
 
-                    String attributeType = convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(attributeId + ".type"))[0]);
+                    String attributeType = convertEjbTypeToJavaType(ModelManager.processQueryResult(manager.query(attributeId + "."+TYPE))[0]);
 
                     Attribute attribute = JavaSyntax.getJavaAttribute();
                     attribute.setName(attributeName).setType(attributeType).setVisibility("private");

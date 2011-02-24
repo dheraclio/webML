@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package br.uff.ic.mda.transformer.core.syntax.webml.presentationview;
+package br.uff.ic.mda.transformer.core.syntax.webml;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.ModelManager;

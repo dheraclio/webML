@@ -142,7 +142,7 @@ public class EJBMetamodeler {
     private static void insertMetamodelAssociations() throws ContractException {
         ModelManager manager = ModelManager.instance();
 
-        manager.insertAssociation(CLASSIFIER, "type", "1", "*", "typed", TYPED);
+        manager.insertAssociation(CLASSIFIER, "ejbtype", "1", "*", "ejbtyped", TYPED);
         manager.insertAssociation(DATASCHEMA, "package", "1", "*", "element", DATASCHEMAELEMENT);
         manager.insertAssociation(SET, "set", "0..*", "1", "elementType", CLASSIFIER);
         manager.insertAssociation(CLASS, "class", "1", "0..*", "feature", FEATURE);

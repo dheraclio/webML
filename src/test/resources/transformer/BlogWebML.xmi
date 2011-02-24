@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Dec 11 19:16:09 BRST 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Dec 16 09:02:23 BRST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.30.2(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -161,15 +161,15 @@
               name = 'OID' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
               <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C07'>
+                <UML:Multiplicity xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D5'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C06'
+                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D4'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
               </UML:StructuralFeature.multiplicity>
               <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
+                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087E'/>
               </UML:StructuralFeature.type>
             </UML:Attribute>
           </UML:Classifier.feature>
@@ -265,15 +265,15 @@
               name = 'OID' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
               <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C0B'>
+                <UML:Multiplicity xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D9'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C0A'
+                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D8'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
               </UML:StructuralFeature.multiplicity>
               <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
+                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087E'/>
               </UML:StructuralFeature.type>
             </UML:Attribute>
           </UML:Classifier.feature>
@@ -349,15 +349,15 @@
               name = 'OID' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
               <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C03'>
+                <UML:Multiplicity xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D1'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--7c732614:12cd746bc55:-8000:0000000000000C02'
+                    <UML:MultiplicityRange xmi.id = '-64--88-56-1--408f801e:12ceed03db6:-8000:00000000000011D0'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
               </UML:StructuralFeature.multiplicity>
               <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
+                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087E'/>
               </UML:StructuralFeature.type>
             </UML:Attribute>
           </UML:Classifier.feature>
@@ -420,7 +420,8 @@
           </UML:ModelElement.stereotype>
         </UML:Class>
         <UML:Association xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE1'
-          name = '' isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+          name = 'Comment2ArticleComments' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
           <UML:Association.connection>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE2'
               name = 'comments' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -438,8 +439,8 @@
               </UML:AssociationEnd.participant>
             </UML:AssociationEnd>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE5'
-              visibility = 'public' isSpecification = 'false' isNavigable = 'true' ordering = 'unordered'
-              aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              name = 'relationship' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
               <UML:AssociationEnd.multiplicity>
                 <UML:Multiplicity xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE6'>
                   <UML:Multiplicity.range>
@@ -455,11 +456,12 @@
           </UML:Association.connection>
         </UML:Association>
         <UML:Association xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE8'
-          name = '' isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+          name = 'ArticleComments2Article' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
           <UML:Association.connection>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BE9'
-              visibility = 'public' isSpecification = 'false' isNavigable = 'true' ordering = 'unordered'
-              aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              name = 'relationship' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
               <UML:AssociationEnd.multiplicity>
                 <UML:Multiplicity xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BF0'>
                   <UML:Multiplicity.range>
@@ -497,7 +499,8 @@
           </UML:ModelElement.stereotype>
         </UML:Class>
         <UML:Association xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BF8'
-          name = '' isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+          name = 'user2userarticles' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
           <UML:Association.connection>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BF9'
               name = 'author' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -515,8 +518,8 @@
               </UML:AssociationEnd.participant>
             </UML:AssociationEnd>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BFC'
-              visibility = 'public' isSpecification = 'false' isNavigable = 'true' ordering = 'unordered'
-              aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              name = 'relationship' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
               <UML:AssociationEnd.multiplicity>
                 <UML:Multiplicity xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000C1D'>
                   <UML:Multiplicity.range>
@@ -532,11 +535,12 @@
           </UML:Association.connection>
         </UML:Association>
         <UML:Association xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000BFF'
-          name = '' isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+          name = 'article2userarticles' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
           <UML:Association.connection>
             <UML:AssociationEnd xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000C00'
-              visibility = 'public' isSpecification = 'false' isNavigable = 'true' ordering = 'unordered'
-              aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              name = 'relationship' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
               <UML:AssociationEnd.multiplicity>
                 <UML:Multiplicity xmi.id = '-64--88-56-1-3083c442:12cd030d274:-8000:0000000000000C19'>
                   <UML:Multiplicity.range>

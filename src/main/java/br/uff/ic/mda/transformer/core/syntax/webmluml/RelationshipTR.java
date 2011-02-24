@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.uff.ic.mda.transformer.core.syntax.webmluml.transformationrules;
+package br.uff.ic.mda.transformer.core.syntax.webmluml;
 
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.transformer.WebMLUMLDomain;
 import br.uff.ic.mda.transformer.core.syntax.uml.UMLMetaModeler;
-import br.uff.ic.mda.transformer.core.syntax.webml.dataview.DataViewPackage;
+import br.uff.ic.mda.transformer.core.syntax.webml.DataViewPackage;
 
 /**
  *

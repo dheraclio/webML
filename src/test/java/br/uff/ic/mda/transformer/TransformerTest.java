@@ -7,7 +7,6 @@ package br.uff.ic.mda.transformer;
 import br.uff.ic.mda.tclib.ChainTransformationContract;
 import br.uff.ic.mda.tclib.TransformationContract;
 import br.uff.ic.mda.xmiparser.XMIParser;
-import br.uff.ic.mda.transformer.util.TestHelper;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,6 +19,7 @@ public class TransformerTest {
     private String umlBlog = TestHelper.getCurrentTargetTestPath() + "/transformer/blog.xmi";
     private String webmlBlog = TestHelper.getCurrentTargetTestPath() + "/transformer/blogwebml.xmi";
     private String entitywebml = TestHelper.getCurrentTargetTestPath() + "/transformer/entitywebml.xmi";
+    private String entityErrorOIDwebml = TestHelper.getCurrentTargetTestPath() + "/transformer/EntityWebMLErrorOID.xmi";
     private int loopPause = 250;
 
     //UML para EJB original do Roberto
@@ -91,10 +91,31 @@ public class TransformerTest {
         chain.transform();
     }
 
+    //@Test
+    public void testWebMLToEJBChainTransformationBlog() throws Exception {
+        testWebMLToEJBChainTransformation(webmlBlog);
+    }
+    
     @Test
-    public void testWebMLToEJBChainTransformation() throws Exception {
-        //WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), webmlBlog);
-        WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), entitywebml);
+    public void testWebMLToEJBChainTransformationEntity() throws Exception {
+        testWebMLToEJBChainTransformation(entitywebml);
+    }
+
+    @Test
+    public void testWebMLToEJBChainTransformationEntityError() throws Exception {
+        testWebMLToEJBChainTransformation(entityErrorOIDwebml);
+    }
+
+    //@Test
+    public void testWebMLToEJBChainTransformationLoop() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            testWebMLToEJBChainTransformationBlog();
+            Thread.sleep(loopPause);
+        }
+    }
+
+    private void testWebMLToEJBChainTransformation(String path) throws Exception {
+        WebMLDomain webmlDomain = new WebMLDomain(new XMIParser(), path);
         UMLDomain umlDomain = new UMLDomain();
         EJBDomain ejbDomain = new EJBDomain();
         WebMLUMLDomain joinedDomain = new WebMLUMLDomain(webmlDomain, umlDomain);
@@ -110,13 +131,5 @@ public class TransformerTest {
 //        System.out.println(ModelManager.instance().query("WEBMLUML_DataType.allInstances().name"));
 
         assertTrue(true);
-    }
-
-    //@Test
-    public void testWebMLToEJBChainTransformationLoop() throws Exception {
-        for (int i = 0; i < 5; i++) {
-            testWebMLToEJBChainTransformation();
-            Thread.sleep(loopPause);
-        }
     }
 }

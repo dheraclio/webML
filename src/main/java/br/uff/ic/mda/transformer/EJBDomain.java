@@ -16,6 +16,8 @@ import java.util.Collection;
  * @author Daniel
  */
 public class EJBDomain extends Domain {
+    public static final String ROLE_TYPE = "ejbtype";
+    public static final String ROLE_TYPED = "ejbtyped";
 
     /**
      *
@@ -369,7 +371,7 @@ public class EJBDomain extends Domain {
      * @throws ContractException
      */
     public boolean insertBusinessMethodTypeLink(String id, String typeId) throws ContractException {
-        return ModelManager.instance().insertLink(EJBMetamodeler.BUSINESSMETHOD, id, "typed", "type", typeId, EJBMetamodeler.CLASSIFIER);
+        return ModelManager.instance().insertLink(EJBMetamodeler.BUSINESSMETHOD, id, ROLE_TYPED, ROLE_TYPE, typeId, EJBMetamodeler.CLASSIFIER);
     }
     /**
      *
@@ -419,7 +421,7 @@ public class EJBDomain extends Domain {
      * @throws ContractException
      */
     public boolean insertEJBParameterTypeLink(String id, String typeId) throws ContractException {
-        return ModelManager.instance().insertLink(EJBMetamodeler.PARAMETER, id, "typed", "type", typeId, EJBMetamodeler.CLASSIFIER);
+        return ModelManager.instance().insertLink(EJBMetamodeler.PARAMETER, id, ROLE_TYPED, ROLE_TYPE, typeId, EJBMetamodeler.CLASSIFIER);
     }
     /**
      *
@@ -472,7 +474,7 @@ public class EJBDomain extends Domain {
      * @throws ContractException
      */
     public boolean insertEJBAttributeTypeLink(String id, String typeId) throws ContractException {
-        return ModelManager.instance().insertLink(EJBMetamodeler.ATTRIBUTE, id, "typed", "type", typeId, EJBMetamodeler.CLASSIFIER);
+        return ModelManager.instance().insertLink(EJBMetamodeler.ATTRIBUTE, id, ROLE_TYPED, ROLE_TYPE, typeId, EJBMetamodeler.CLASSIFIER);
     }
     /**
      *
@@ -531,7 +533,7 @@ public class EJBDomain extends Domain {
      * @throws ContractException
      */
     public boolean insertEJBAssociationEndTypeLink(String id, String typeId) throws ContractException {
-        return ModelManager.instance().insertLink(EJBMetamodeler.ASSOCIATIONEND, id, "typed", "type", typeId, EJBMetamodeler.CLASSIFIER);
+        return ModelManager.instance().insertLink(EJBMetamodeler.ASSOCIATIONEND, id, ROLE_TYPED, ROLE_TYPE, typeId, EJBMetamodeler.CLASSIFIER);
     }
     /**
      *
@@ -590,7 +592,7 @@ public class EJBDomain extends Domain {
      * @throws ContractException
      */
     public boolean insertEJBServingAttributeTypeLink(String id, String typeId) throws ContractException {
-        return ModelManager.instance().insertLink(EJBMetamodeler.SERVINGATTRIBUTE, id, "typed", "type", typeId, EJBMetamodeler.CLASSIFIER);
+        return ModelManager.instance().insertLink(EJBMetamodeler.SERVINGATTRIBUTE, id, ROLE_TYPED, ROLE_TYPE, typeId, EJBMetamodeler.CLASSIFIER);
     }
     /**
      *

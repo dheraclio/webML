@@ -7,7 +7,7 @@ package br.uff.ic.mda.transformer.core.syntax.webml;
 import br.uff.ic.mda.tclib.ContractException;
 import br.uff.ic.mda.tclib.IXMIParser;
 import br.uff.ic.mda.tclib.ModelManager;
-import br.uff.ic.mda.transformer.core.syntax.webml.commonelements.CommonElementsPackage;
+import br.uff.ic.mda.transformer.core.util.JDHelper;
 import br.uff.ic.mda.xmiparser.uml.UMLAssociation;
 import br.uff.ic.mda.xmiparser.uml.UMLAssociationEnd;
 import br.uff.ic.mda.xmiparser.uml.UMLAttribute;
@@ -25,6 +25,23 @@ import java.util.Set;
  * @author Daniel
  */
 public class WebMLXMIParser {
+    private static final String ATTR_COMPOSITION = "composition";
+    private static final String ATTR_LOWER = "lower";
+    private static final String ATTR_NAME = "name";
+    private static final String ATTR_UPPER = "upper";
+    private static final String ATTR_VISIBILITY = "visibility";
+    private static final String ROLE_ASSOCIATION = "association";
+    private static final String ROLE_ASSOCIATIONENDS = "associationEnds";
+    private static final String ROLE_CLASS = "class";
+    private static final String ROLE_CLASSIFIER = "classifier";
+    private static final String ROLE_ELEMENTTYPE = "elementType";
+    private static final String ROLE_FEATURE = "feature";
+    private static final String ROLE_OPERATION = "operation";
+    private static final String ROLE_OTHEREND = "otherEnd";
+    private static final String ROLE_OTHERS = "others";
+    private static final String ROLE_PARAMETER = "parameter";
+    private static final String ROLE_SETA = "setA";
+    private static final String ROLE_TYPES = "types";
 
     private IXMIParser parser;
     private ModelManager manager = ModelManager.instance();
@@ -66,17 +83,19 @@ public class WebMLXMIParser {
         for (Entry<String, UMLClass> classEntry : classSet) {
             UMLClass umlclass = classEntry.getValue();
             if (!umlclass.hasStereotype()) {
-                throw new ContractException("Class not stereotyped: " + umlclass.getName());
+                throw new ContractException("Class not stereotyped: "
+                        + umlclass.getName());
             } else {
-                insertStereotypedClass(umlclass.getId(), umlclass.getName(), umlclass.getStereotypeRefId());
+                insertStereotypedClass(umlclass.getId(),
+                        umlclass.getName(), umlclass.getStereotypeRefId());
             }
         }
-
     }
 
-    private boolean insertStereotypedClass(String id, String name, String stereotypeId) throws ContractException {
+    private boolean insertStereotypedClass(String id, String name, String stereotypeId)
+            throws ContractException {
         boolean result = true;
-        final String attName = "name";
+        final String attName = ATTR_NAME;
         String stereotypeName = getStereoTypeName(stereotypeId);
         result &= manager.insertObject(stereotypeName, id);
         result &= insertValue(stereotypeName, attName, id, name);
@@ -118,17 +137,17 @@ public class WebMLXMIParser {
 
         boolean result = true;
         result &= manager.insertObject(attribute, attrId);
-        result &= insertValue(attribute, "name", attrId, name);
-        result &= insertValue(attribute, "visibility", attrId, visibility);
-        result &= manager.insertLink(attribute, attrId, "types", "classifier", type, classifer);
-        result &= manager.insertLink(attribute, attrId, "feature", "class", classInstance.getId(), steretypeName);
+        result &= insertValue(attribute, ATTR_NAME, attrId, name);
+        result &= insertValue(attribute, ATTR_VISIBILITY, attrId, visibility);
+        result &= manager.insertLink(attribute, attrId, ROLE_TYPES, ROLE_CLASSIFIER, type, classifer);
+        result &= manager.insertLink(attribute, attrId, ROLE_FEATURE, ROLE_CLASS, classInstance.getId(), steretypeName);
 
         return result;
     }
 
     private boolean insertObject(String className, String classId, String objectName) throws ContractException {
         boolean result = true;
-        final String attName = "name";
+        final String attName = ATTR_NAME;
         result &= manager.insertObject(className, classId);
         result &= insertValue(className, attName, classId, objectName);
         return result;
@@ -173,12 +192,12 @@ public class WebMLXMIParser {
 
         boolean result = true;
         result &= insertObject(associationEnd, id, association.getName());
-        result &= insertValue(associationEnd, "visibility", id, association.getVisibility());
-        result &= insertValue(associationEnd, "lower", id, lower);
-        result &= insertValue(associationEnd, "upper", id, upper);
-        result &= insertValue(associationEnd, "composition", id, association.isAggregation());
-        result &= manager.insertLink(associationEnd, id, "types", "classifier", typeInstance.getId(), CommonElementsPackage.UMLCLASSIFIER);
-        result &= manager.insertLink(associationEnd, id, "feature", "class", classInstance.getId(), CommonElementsPackage.UMLCLASS);
+        result &= insertValue(associationEnd, ATTR_VISIBILITY, id, association.getVisibility());
+        result &= insertValue(associationEnd, ATTR_LOWER, id, lower);
+        result &= insertValue(associationEnd, ATTR_UPPER, id, upper);
+        result &= insertValue(associationEnd, ATTR_COMPOSITION, id, association.isAggregation());
+        result &= manager.insertLink(associationEnd, id, ROLE_TYPES, ROLE_CLASSIFIER, typeInstance.getId(), CommonElementsPackage.UMLCLASSIFIER);
+        result &= manager.insertLink(associationEnd, id, ROLE_FEATURE, ROLE_CLASS, classInstance.getId(), CommonElementsPackage.UMLCLASS);
         return result;
     }
 
@@ -192,7 +211,7 @@ public class WebMLXMIParser {
         boolean result = true;
         result &= insertObject(association, id, name);
         for (String associationEndId : associationEndIds) {
-            result &= manager.insertLink(associationEnd, associationEndId, "associationEnds", "association", id, association);
+            result &= manager.insertLink(associationEnd, associationEndId, ROLE_ASSOCIATIONENDS, ROLE_ASSOCIATION, id, association);
         }
         return result;
     }
@@ -201,8 +220,8 @@ public class WebMLXMIParser {
         final String associationEndClass = CommonElementsPackage.UMLASSOCIATIONEND;
 
         boolean result = true;
-        result &= manager.insertLink(associationEndClass, associationEnd, "others", "otherEnd", otherEnd, associationEndClass);
-        result &= manager.insertLink(associationEndClass, otherEnd, "others", "otherEnd", associationEnd, associationEndClass);
+        result &= manager.insertLink(associationEndClass, associationEnd, ROLE_OTHERS, ROLE_OTHEREND, otherEnd, associationEndClass);
+        result &= manager.insertLink(associationEndClass, otherEnd, ROLE_OTHERS, ROLE_OTHEREND, associationEnd, associationEndClass);
         return result;
     }
 
@@ -236,9 +255,9 @@ public class WebMLXMIParser {
         final String className = CommonElementsPackage.UMLCLASS;
 
         boolean result = insertObject(operation, id, name);
-        result &= insertValue(operation, "visibility", id, visibility);
-        result &= manager.insertLink(operation, id, "types", "classifier", returnType, classifier);
-        result &= manager.insertLink(operation, id, "feature", "class", classId, className);
+        result &= insertValue(operation, ATTR_VISIBILITY, id, visibility);
+        result &= manager.insertLink(operation, id, ROLE_TYPES, ROLE_CLASSIFIER, returnType, classifier);
+        result &= manager.insertLink(operation, id, ROLE_FEATURE, ROLE_CLASS, classId, className);
         return result;
     }
 
@@ -249,8 +268,8 @@ public class WebMLXMIParser {
 
         boolean result = insertObject(parameter, id, name);
 
-        result &= manager.insertLink(parameter, id, "types", "classifier", type, classifier);
-        result &= manager.insertLink(parameter, id, "parameter", "operation", operationId, operation);
+        result &= manager.insertLink(parameter, id, ROLE_TYPES, ROLE_CLASSIFIER, type, classifier);
+        result &= manager.insertLink(parameter, id, ROLE_PARAMETER, ROLE_OPERATION, operationId, operation);
 
         return result;
     }
@@ -265,7 +284,7 @@ public class WebMLXMIParser {
 
     private String getOperationType(UMLElement element, String typeId) throws ContractException {
         if ("List".equals(element.getName())) {
-            String setId = "ID" + System.nanoTime();
+            String setId = JDHelper.getNewId();
             this.insertSet(setId, element.getName(), CommonElementsPackage.JAVAVOID);
             return setId;
         } else {
@@ -282,7 +301,7 @@ public class WebMLXMIParser {
         final String classifier = CommonElementsPackage.UMLCLASSIFIER;
 
         boolean result = insertObject(umlSet, id, name);
-        result &= manager.insertLink(umlSet, id, "setA", "elementType", elementType, classifier);
+        result &= manager.insertLink(umlSet, id, ROLE_SETA, ROLE_ELEMENTTYPE, elementType, classifier);
         return result;
     }
 
@@ -317,7 +336,7 @@ public class WebMLXMIParser {
             if (pElement != null) {
                 // Eh um DataType
                 if ("List".equals(pElement.getName())) {
-                    String setId = "ID" + System.nanoTime();
+                    String setId = JDHelper.getNewId();
                     this.insertSet(setId, pElement.getName(), CommonElementsPackage.JAVAVOID);
                     parameterType = setId;
                 } else {
